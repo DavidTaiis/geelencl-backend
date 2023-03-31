@@ -1,0 +1,6 @@
+.form-group.has-error {
+    color: #F64E60;
+}
+.form-group.has-error > div >  .form-control, .form-group.has-error > div > span >span >span.select2-selection {
+    border: 1px solid #F64E60;
+}
