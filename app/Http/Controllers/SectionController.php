@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Answers;
+use App\Models\Section;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Multimedia\ImageController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
-class AnswersController extends MyBaseController
+class SectionController extends MyBaseController
 {
 
     /**
@@ -21,7 +21,7 @@ class AnswersController extends MyBaseController
      */
     public function index()
     {
-        $this->layout->content = View::make('answers.index', [
+        $this->layout->content = View::make('section.index', [
         ]);
     }
 
@@ -29,13 +29,13 @@ class AnswersController extends MyBaseController
     {
         $data = Request::all();
 
-        $query = Answers::query();
+        $query = Section::query();
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
         if (isset($data['search']['value']) && $data['search']['value']) {
             $search = $data['search']['value'];
-            $query->where('respuestas.answer', 'like', "$search%");
+            $query->where('secciones.nombre', 'like', "$search%");
             $recordsFiltered = $query->get()->count();
         }
         if (isset($data['start']) && $data['start']) {
@@ -45,13 +45,13 @@ class AnswersController extends MyBaseController
             $query->limit((int)$data['length']);
         }
 
-        $answers = $query->get()->toArray();
+        $sections = $query->get()->toArray();
         return Response::json(
             array(
                 'draw' => $data['draw'],
                 'recordsTotal' => $recordsTotal,
                 'recordsFiltered' => $recordsFiltered,
-                'data' => $answers
+                'data' => $sections
             )
         );
     }
@@ -59,10 +59,10 @@ class AnswersController extends MyBaseController
     public function getForm($id = null)
     {
         $method = 'POST';
-        $answers = isset($id) ? Answers::find($id) : new Answers();
-        $view = View::make('answers.loads._form', [
+        $section = isset($id) ? Section::find($id) : new Section();
+        $view = View::make('section.loads._form', [
             'method' => $method,
-            'answers' => $answers,
+            'section' => $section,
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -75,19 +75,19 @@ class AnswersController extends MyBaseController
         try {
             DB::beginTransaction();
             $data = Request::all();
-            if ($data['answers_id'] == '') { //Create
-                $answers = new Answers();
-                $answers->status = 'ACTIVE';
+            if ($data['section_id'] == '') { //Create
+                $section = new Section();
+                $section->status = 'ACTIVE';
             } else { //Update
-                $answers = Answers::query()->find($data['answers_id']);
+                $section = Section::query()->find($data['section_id']);
                 if (isset($data['status'])) {
-                    $answers->status = $data['status'];
+                    $section->status = $data['status'];
                 }
             }
-            $answers->answer = trim($data['answer']);
-            $answers->status = trim($data['status']);
+            $section->name = trim($data['name']);
+            $section->status = trim($data['status']);
             
-            $answers->save();
+            $section->save();
 
             DB::commit();
             return Response::json(['status' => 'success']);
@@ -99,7 +99,7 @@ class AnswersController extends MyBaseController
 
     public function postIsNameUnique()
     {
-        $validation = Validator::make(Request::all(), ['name' => 'unique:respuestas,answers,' . Request::get('id') . ',id']);
+        $validation = Validator::make(Request::all(), ['name' => 'unique:secciones,name,' . Request::get('id') . ',id']);
         return Response::json($validation->passes() ? true : false);
     }
 }
