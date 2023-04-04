@@ -73,7 +73,31 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
             Route::post('save', 'ImageParameterController@postSave')->name('saveMultimedia');
         });
     });
+        
+    Route::group(['prefix' => 'typeProvider'], function () {
+        Route::get('/', 'TypeProviderController@index')->name('viewIndexTypeProvider');
+        Route::get('/form/{id?}', 'TypeProviderController@getForm')->name('getFormTypeProvider');
+        Route::get('/list', 'TypeProviderController@getList')->name('getListDataTypeProvider');
+        Route::post('/save', 'TypeProviderController@postSave')->name('saveTypeProvider');
+        Route::post('/save/uploads', 'TypeProviderController@postSaveUpload')->name('uploadTypeProvider');
+    });  
 
+    
+    Route::group(['prefix' => 'answers'], function () {
+        Route::get('/', 'AnswersController@index')->name('viewIndexAnswers');
+        Route::get('/form/{id?}', 'AnswersController@getForm')->name('getFormAnswers');
+        Route::get('/list', 'AnswersController@getList')->name('getListDataAnswers');
+        Route::post('/save', 'AnswersController@postSave')->name('saveAnswers');
+        Route::post('/save/uploads', 'AnswersController@postSaveUpload')->name('uploadAnswers');
+    });
+
+    Route::group(['prefix' => 'section'], function () {
+        Route::get('/', 'SectionController@index')->name('viewIndexSection');
+        Route::get('/form/{id?}', 'SectionController@getForm')->name('getFormSection');
+        Route::get('/list', 'SectionController@getList')->name('getListDataSection');
+        Route::post('/save', 'SectionController@postSave')->name('saveSection');
+        Route::post('/save/uploads', 'SectionController@postSaveUpload')->name('uploadSection');
+    });
 });
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
