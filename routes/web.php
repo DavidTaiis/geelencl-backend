@@ -41,6 +41,26 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         });
     });
 
+    Route::group(['prefix' => 'company'], function () {
+        Route::get('/', 'CompanyController@index')->name('indexViewCompany');
+        Route::get('/list', 'CompanyController@getList')->name('getListDataCompany');
+        Route::get('/form/{id?}', 'CompanyController@getForm')->name('getFormCompany');
+        Route::post('save', 'CompanyController@postSave')->name('saveCompany');
+        Route::post('unique-name', 'CompanyController@postIsNameUnique')->name('uniqueNameCompany');
+        /* Route::get('/view', 'CompanyController@view')->name('viewProfileCompany');
+        Route::post('updateCompany', 'CompanyController@updateCompanyUser')->name('updateCompany'); */
+    });
+
+    Route::group(['prefix' => 'provider'], function () {
+        Route::get('/', 'ProviderController@index')->name('indexViewProvider');
+        Route::get('/list', 'ProviderController@getList')->name('getListDataProvider');
+        Route::get('/form/{id?}', 'ProviderController@getForm')->name('getFormProvider');
+        Route::post('save', 'ProviderController@postSave')->name('saveProvider');
+        Route::post('unique-name', 'ProviderController@postIsNameUnique')->name('uniqueNameProvider');
+        /* Route::get('/view', 'CompanyController@view')->name('viewProfileCompany');
+        Route::post('updateCompany', 'CompanyController@updateCompanyUser')->name('updateCompany'); */
+    });
+
     Route::group(['prefix' => 'multimedia', 'namespace' => 'Multimedia'], function () {
         Route::group(['prefix' => 'image-parameter'], function () {
             Route::get('/', 'ImageParameterController@index')->name('viewIndexMultimedia');

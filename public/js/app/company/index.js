@@ -1,14 +1,14 @@
-var modalprovider = null;
-var formprovider = null;
+var modalCompany = null;
+var formCompany = null;
 var dataTable = null;
 var imagesDeleted = [];
 $(function () {
-    dataTable = initDataTableAjax($('#provider_table'),
+    dataTable = initDataTableAjax($('#company_table'),
         {
             "processing": true,
             "serverSide": true,
             ajax: {
-                url: $('#action_load_provider').val(),
+                url: $('#action_load_company').val(),
                 data: function (filterDateTable) {
                     //additional params for ajax request
                     // filterDateTable.vendor_id = 3;
@@ -52,29 +52,29 @@ $(function () {
                     orderable: false,
                     width: "140px",
                     render: function (data, type, row, meta) {
-                        return '<button class="btn btn-dark btn-sm" onclick="editprovider(' + row.id + ')">Editar</button>';
+                        return '<button class="btn btn-dark btn-sm" onclick="editCompany(' + row.id + ')">Editar</button>';
                     }
                     
                 }
             ]
         });
         
-    modalprovider = $('#provider_modal');
+    modalCompany = $('#company_modal');
 });
 
-function editprovider(id) {
-    modalprovider.find('.modal-title').html('Editar proveedor');
-    getformprovider($('#action_get_form').val() + '/' + id);
+function editCompany(id) {
+    modalCompany.find('.modal-title').html('Editar empresa');
+    getformCompany($('#action_get_form').val() + '/' + id);
 }
 
-function newProvider() {
-    modalprovider.find('.modal-title').html('Crear proveedor');
-    getformprovider($('#action_get_form').val());
+function newCompany() {
+    modalCompany.find('.modal-title').html('Crear empresa');
+    getformCompany($('#action_get_form').val());
 }
 
-function saveprovider() {
-    if ($('#provider_form').valid()) {
-        var data = $('#provider_form').serializeArray();
+function saveCompany() {
+    if ($('#company_form').valid()) {
+        var data = $('#company_form').serializeArray();
         var files = getFiles();
         var dataForm = new FormData();
         
@@ -90,34 +90,34 @@ function saveprovider() {
                 JSON.stringify(file.params));
         });
         ajaxRequest(
-            $('#action_save_provider').val(),
+            $('#action_save_company').val(),
             {
                 type: 'POST',
                 data: dataForm,
-                blockElement: '#provider_modal .modal-content',//opcional: es para bloquear el elemento
+                blockElement: '#company_modal .modal-content',//opcional: es para bloquear el elemento
                 loading_message: 'Guardando...',
-                error_message: 'Error al guardar la proveedor',
+                error_message: 'Error al guardar la empresa',
                 success_message: 'Se guardó correctamente',
                 success_callback: function (data) {
-                    $('#provider_modal').modal('hide');
+                    $('#company_modal').modal('hide');
                     dataTable.ajax.reload();
                 }
             }, true);
     }
 }
-function getformprovider(url) {
+function getformCompany(url) {
     
     ajaxRequest(url, {
         type: 'GET',
         error_message: 'Error al cargar formulario',
         success_callback: function (data) {
-            modalprovider.find('.container_modal').html('');
-            modalprovider.find('.container_modal').html(data.html);
-            formprovider = $("#provider_form");
-            validateformprovider();
+            modalCompany.find('.container_modal').html('');
+            modalCompany.find('.container_modal').html(data.html);
+            formCompany = $("#company_form");
+            validateformCompany();
             imagesDeleted = [];
             initDropZones();
-            modalprovider.modal({
+            modalCompany.modal({
                 show: true,
                 backdrop: 'static',
                 keyboard: false // to prevent closing with Esc button (if you want this too)
@@ -126,8 +126,8 @@ function getformprovider(url) {
     });
 }
 
-function validateformprovider() {
-    formprovider.validate({
+function validateformCompany() {
+    formCompany.validate({
         rules: {
             name: {
                 required: true,
@@ -137,7 +137,7 @@ function validateformprovider() {
                     type: 'POST',
                     data: {
                         id: function () {
-                            return $('#provider_id').val();
+                            return $('#company_id').val();
                         },
                         _token: $('meta[name="csrf-token"]').attr('content'),
                         name: function () {
@@ -155,7 +155,7 @@ function validateformprovider() {
                     type: 'POST',
                     data: {
                         id: function () {
-                            return $('#provider_id').val();
+                            return $('#company_id').val();
                         },
                         _token: $('meta[name="csrf-token"]').attr('content'),
                         code: function () {
@@ -171,7 +171,7 @@ function validateformprovider() {
         },
         messages: {
             name: {
-                remote: 'Ya existe una proveedor con ese nombre.'
+                remote: 'Ya existe una empresa con ese nombre.'
             },
             code: {
                 remote: 'Ya existe un código con ese nombre'
@@ -183,7 +183,7 @@ function validateformprovider() {
         success: validationSuccess,
         errorPlacement: validationErrorPlacement,
         submitHandler: function (form) {
-            saveprovider();
+            saveCompany();
         }
     });
 }
