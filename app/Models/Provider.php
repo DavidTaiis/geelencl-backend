@@ -39,6 +39,7 @@ class Provider extends Model
      */
     protected $fillable = [
         'id',
+        'tipo_proveedor_id',
         'users_id',
         'comercial_name',
         'legal_name',

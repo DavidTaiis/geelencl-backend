@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Provider;
 use App\Models\User;
+use App\Models\TypeProvider;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -60,7 +61,7 @@ class ProviderController extends MyBaseController
     {
         $method = 'POST';
         $provider = isset($id) ? Provider::find($id) : new Provider();
-        $user = $provider->id ? User::find($provider->id): new User();
+        $user = $provider->id ? User::find($provider->users_id): new User();
         $typeProvider = TypeProvider::all()->pluck('name', 'id')->toArray();
         $image_parameters = ImageParameter::query()
             ->where('entity', '=', ImageParameter::TYPE_UNIT)
@@ -86,7 +87,7 @@ class ProviderController extends MyBaseController
             'provider' => $provider,
             'image_parameters' => $image_parameters,
             'user'=> $user,
-            'typeProvider'=>$typeProvider
+            'typeProvider'=> $typeProvider
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -105,6 +106,7 @@ class ProviderController extends MyBaseController
             } else { //Update
                 $provider = Provider::find($data['provider_id']);
                 $user = User::find($provider->users_id);
+               
             }
             $user->name = trim($data['administrador_name']);
             $user->email = trim($data['administrador_email']);
