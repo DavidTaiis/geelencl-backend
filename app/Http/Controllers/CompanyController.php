@@ -60,7 +60,7 @@ class CompanyController extends MyBaseController
     {
         $method = 'POST';
         $company = isset($id) ? Company::find($id) : new Company();
-        $user = $company->id ? User::find($company->id): new User();
+        $user = $company->id ? User::find($company->users_id): new User();
         $image_parameters = ImageParameter::query()
             ->where('entity', '=', ImageParameter::TYPE_UNIT)
             ->get()

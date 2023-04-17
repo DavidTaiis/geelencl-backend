@@ -18,6 +18,13 @@
         </div>
         
         <div class="form-group">
+            {!! Form::label('tipo_proveedor_id','* Tipo Proveedor:', array('class' => 'control-label col-md-12')) !!}
+            <div class="col-md-12">
+                {!! Form::select('tipo_proveedor_id', $typeProvider, $provider->tipo_proveedor_id,array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => 'Seleccione')); !!}
+            </div>
+        </div>
+        <div class="form-group">
             {!! Form::label('status','* Estado:', array('class' => 'control-label col-md-12')) !!}
             <div class="col-md-12">
                 {!! Form::select('status', ['ACTIVE' => 'ACTIVO', 'INACTIVE' => 'INACTIVO'], $provider->status,array('class' => 'form-control', 'autocomplete' =>
