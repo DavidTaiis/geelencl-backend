@@ -29,6 +29,8 @@
     <input id="action_get_form" type="hidden" value="{{ route("getFormSection") }}"/>
     <input id="action_save" type="hidden" value="{{ route("saveSection")}}"/>
     <input id="action_list" type="hidden" value="{{ route("getListDataSection") }}"/>
+    <input id="action_index_question" type="hidden" value="{{ route("viewIndexQuestion") }}"/>
+
 @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/section/index.js")}}"></script>

@@ -622,3 +622,6 @@ div.admin-title {
 .daterangepicker.dropdown-menu{
     z-index: 10000 !important;
 }
+.manualShow{
+    display: none;
+}

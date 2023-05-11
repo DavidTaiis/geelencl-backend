@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property string level
  * @property string status
  */
-class Section extends Model
+class QuestionProvider extends Model
 {
 
     /**
@@ -24,7 +24,7 @@ class Section extends Model
      *
      * @var string
      */
-    public $table = 'secciones';
+    public $table = 'preguntas_proveedor';
 
     protected $guarded = [];
     const STATUS_ACTIVE = 'ACTIVE';
@@ -42,8 +42,10 @@ class Section extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'status',
+        'respuestas_id',
+        'preguntas_id',
+        'proveedor_id',
+        'value'
     ];
 
     /**
@@ -53,8 +55,10 @@ class Section extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string',
-        'status' => 'string'
+        'respuestas_id' => 'integer',
+        'preguntas_id' => 'integer',
+        'proveedor_id' => 'integer',
+        'value' => 'string',
     ];
 
     /**
@@ -67,14 +71,4 @@ class Section extends Model
         'updated_at',
     ];
 
-    public function questions()
-    {
-        return $this->hasMany(Question::class, 'secciones_id');
-    }
-
-    public function sectionsTypeProvider()
-    {
-        return $this->belongsToMany(TypeProvider::class, 'secciones_tipo_proveedor',
-            'secciones_id', 'tipo_proveedor_id');
-    }
 }

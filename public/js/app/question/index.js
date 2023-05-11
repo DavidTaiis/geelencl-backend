@@ -1,8 +1,9 @@
-var modal_answers = null;
-var answers_form = null;
+var modal_question = null;
+var question_form = null;
 var dataTable = null;
 $(function () {
-    dataTable = initDataTableAjax($('#answers_table'),
+    
+    dataTable = initDataTableAjax($('#question_table'),
         {
             'processing': true,
             'serverSide': true,
@@ -22,10 +23,13 @@ $(function () {
             },
             columns: [
                 {
-                    data: 'answer',
-                    title: 'Respuesta',
+                    data: 'question',
+                    title: 'Pregunta',
                 },
-       
+                {
+                    data: 'type_question',
+                    title: 'Tipo de pregunta',
+                },
                 {
                     data: 'status',
                     title: 'Estado',
@@ -43,36 +47,36 @@ $(function () {
                     orderable: false,
                     render: function (data, type, row, meta) {
                        
-                        return '<button class="btn btn-dark btn-sm" onclick="editAnswers(' +
+                        return '<button class="btn btn-dark btn-sm" onclick="editQuestion(' +
                             row.id + ')">Editar</button>';
                     },
                 },
             ],
         });
-        modal_answers = $('#modal');
+        modal_question = $('#modal');
 });
 
-function editAnswers(id) {
-    modal_answers.find('.modal-title').html('Editar respuesta');
+function editQuestion(id) {
+    modal_question.find('.modal-title').html('Editar pregunta');
     getForm($('#action_get_form').val() + '/' + id);
 }
 
-function newAnswers() {
-    modal_answers.find('.modal-title').html('Crear respuesta');
+function newQuestion() {
+    modal_question.find('.modal-title').html('Crear pregunta');
     getForm($('#action_get_form').val());
 }
 
-function saveAnswers() {
-    if (answers_form.valid()) {
+function saveQuestion() {
+    if (question_form.valid()) {
         ajaxRequest($('#action_save').val(), {
             type: 'POST',
-            data: answers_form.serialize(),
+            data: question_form.serialize(),
             blockElement: '#modal .modal-content',//opcional: es para bloquear el elemento
             loading_message: 'Guardando...',
-            error_message: 'Error al guardar la respuesta',
-            success_message: 'La respuesta se guardo correctamente',
+            error_message: 'Error al guardar la pregunta',
+            success_message: 'La pregunta se guardo correctamente',
             success_callback: function (data) {
-                modal_answers.modal('hide');
+                modal_question.modal('hide');
                 dataTable.ajax.reload();
             },
         });
@@ -84,11 +88,27 @@ function getForm(action) {
         type: 'GET',
         error_message: 'Error al cargar formulario',
         success_callback: function (data) {
-            modal_answers.find('.container_modal').html('');
-            modal_answers.find('.container_modal').html(data.html);
-            answers_form = $('#answers_form');    
-            validateForm();      
-            modal_answers.modal({
+            modal_question.find('.container_modal').html('');
+            modal_question.find('.container_modal').html(data.html);
+            question_form = $('#question_form');   
+            validateForm();
+            $('#answers_id').select2({
+                dropdownParent: $('#question_form'),
+                width: '100%',
+                placeholder: '-Seleccione-',
+            });
+            if($('#type_question').val() == 'ABIERTA'){
+                $('#respuestas').hide();
+              
+            }
+            $('#type_providers_id').select2({
+                dropdownParent: $('#question_form'),
+                width: '100%',
+                placeholder: '-Seleccione-',
+            });
+            
+
+            modal_question.modal({
                 show: true,
                 backdrop: 'static',
                 keyboard: false, // to prevent closing with Esc button (if you want this too)
@@ -98,7 +118,7 @@ function getForm(action) {
 }
 
 function validateForm() {
-    answers_form.validate({
+    question_form.validate({
         rules: {
             name: {
                 required: true,
@@ -115,7 +135,25 @@ function validateForm() {
         success: validationSuccess,
         errorPlacement: validationErrorPlacement,
         submitHandler: function (form) {
-            saveAnswers();
+            saveQuestion();
         },
+    });
+}
+function loadTypeQuestion(){
+    if($('#type_question').val() == 'ABIERTA'){
+        $('#answers_id').prop( "disabled", true );
+        $('#answers_id').empty();
+        $('#respuestas').hide();
+    }else{
+        $('#answers_id').prop( "disabled", false );
+        $('#respuestas').show();
+
+    }
+}
+function initDropZones() {
+    Dropzone.autoDiscover = false;
+    $('.wrapper_image').each(function (i) {
+        var config = $(this).data();
+        initDropZone($(this), config);
     });
 }

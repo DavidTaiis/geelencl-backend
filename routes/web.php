@@ -98,6 +98,34 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         Route::post('/save', 'SectionController@postSave')->name('saveSection');
         Route::post('/save/uploads', 'SectionController@postSaveUpload')->name('uploadSection');
     });
+
+    Route::group(['prefix' => 'question'], function () {
+        Route::get('/{id?}', 'QuestionController@index')->name('viewIndexQuestion');
+        Route::get('/form/{sectionId?}/{id?}', 'QuestionController@getForm')->name('getFormQuestion');
+        Route::get('/list/{id?}', 'QuestionController@getList')->name('getListDataQuestion');
+        Route::post('/save', 'QuestionController@postSave')->name('saveQuestion');
+        Route::post('/save/uploads', 'QuestionController@postSaveUpload')->name('uploadQuestion');
+    });
+    
+    Route::group(['prefix' => 'documents'], function () {
+        Route::get('/', 'ManualController@index')->name('viewIndexManual');
+        Route::get('/form/{id?}', 'ManualController@getForm')->name('getFormManual');
+        Route::get('/list', 'ManualController@getList')->name('getListDataManual');
+        Route::post('/save', 'ManualController@postSave')->name('saveManual');
+        Route::post('/save/uploads', 'ManualController@postSaveUpload')->name('uploadManual');
+    });
+
+    Route::group(['prefix' => 'providersCompany'], function () {
+        Route::get('/', 'ProviderCompanyController@index')->name('viewIndexProviderCompany');
+        Route::post('/save', 'ProviderCompanyController@postSave')->name('saveProviderCompany');
+    });
+
+
+    Route::group(['prefix' => 'companyProviders'], function () {
+        Route::get('/', 'CompanyProvidersController@index')->name('viewIndexCompanyProviders');
+        Route::get('/list', 'CompanyProvidersController@getList')->name('getListDataCompanyProviders');
+        Route::get('/{id?}', 'CompanyProvidersController@indexInformation')->name('viewIndexInformationProvider');
+    });
 });
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {

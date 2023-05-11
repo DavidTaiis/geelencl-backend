@@ -24,6 +24,7 @@ $(function () {
                 {
                     data: 'name',
                     title: 'Nombre',
+                    orderable: true
                 },
        
                 {
@@ -44,7 +45,7 @@ $(function () {
                     render: function (data, type, row, meta) {
                        
                         return '<button class="btn btn-dark btn-sm" onclick="editSection(' +
-                            row.id + ')">Editar</button>';
+                            row.id + ')">Editar</button> <a href="'+ $('#action_index_question').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Añadir pregunta</span></a>';
                     },
                 },
             ],
@@ -88,6 +89,11 @@ function getForm(action) {
             modal_section.find('.container_modal').html(data.html);
             section_form = $('#section_form');    
             validateForm();      
+            $('#typeProviders_id').select2({
+                dropdownParent: $('#section_form'),
+                width: '100%',
+                placeholder: '-Seleccione-',
+            });
             modal_section.modal({
                 show: true,
                 backdrop: 'static',

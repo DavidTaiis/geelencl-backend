@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Provider;
 use App\Models\User;
+use App\Models\Company;
 use App\Models\TypeProvider;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -46,13 +47,13 @@ class ProviderController extends MyBaseController
             $query->limit((int)$data['length']);
         }
 
-        $companies = $query->get()->toArray();
+        $providers = $query->get()->toArray();
         return Response::json(
             array(
                 'draw' => $data['draw'],
                 'recordsTotal' => $recordsTotal,
                 'recordsFiltered' => $recordsFiltered,
-                'data' => $companies
+                'data' => $providers
             )
         );
     }
@@ -63,6 +64,7 @@ class ProviderController extends MyBaseController
         $provider = isset($id) ? Provider::find($id) : new Provider();
         $user = $provider->id ? User::find($provider->users_id): new User();
         $typeProvider = TypeProvider::all()->pluck('name', 'id')->toArray();
+        $companies = Company::all()->pluck('comercial_name', 'id')->toArray();
         $image_parameters = ImageParameter::query()
             ->where('entity', '=', ImageParameter::TYPE_UNIT)
             ->get()
@@ -87,7 +89,8 @@ class ProviderController extends MyBaseController
             'provider' => $provider,
             'image_parameters' => $image_parameters,
             'user'=> $user,
-            'typeProvider'=> $typeProvider
+            'typeProvider'=> $typeProvider,
+            'companies' => $companies
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -122,7 +125,9 @@ class ProviderController extends MyBaseController
             $provider->direction = trim($data['direction']);
             $provider->phone_number = trim($data['phone_number']);
             $provider->status = trim($data['status']);
+            $provider->empresas_id = trim($data['company_id']);
             $provider->save();
+            
             //Imágenes
             $imageController = new ImageController();
             $images = $data['files'] ?? [];
