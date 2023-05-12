@@ -12,6 +12,7 @@ use App\Models\Image;
 use App\Models\ImageParameter;
 use App\Http\Controllers\Multimedia\ImageController;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class CompanyController extends MyBaseController
 {
@@ -35,7 +36,7 @@ class CompanyController extends MyBaseController
 
         if (isset($data['search']['value']) && $data['search']['value']) {
             $search = $data['search']['value'];
-            $query->where('company.name', 'like', "$search%");
+            $query->where('company.name', 'like', "%$search%");
             $recordsFiltered = $query->get()->count();
         }
         if (isset($data['start']) && $data['start']) {
@@ -164,5 +165,30 @@ class CompanyController extends MyBaseController
     {
         $validation = Validator::make(Request::all(), ['name' => 'unique:company,name,' . Request::get('id') . ',id']);
         return Response::json($validation->passes() ? true : false);
+    }
+
+    public function indexProfile()
+    { 
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('users_id', $user->id)->first();
+        $this->layout->content = View::make('companyProfile.index', [
+            'company' => $company
+        ]);
+    }
+
+    public function postSaveProfile(){
+        $data = Request::all();
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('users_id', $user->id)->first();
+
+        $company->comercial_name = $data['comercial_name'];
+        $company->legal_name = $data['legal_name'];
+        $company->email = $data['email'];
+        $company->direction = $data['direction'];
+        $company->phone_number = $data['phoneNumber'];
+
+        $company->save();
+
+        return redirect()->route('viewIndexCompanyProfile')->with('success','Datos actualizados exitosamente');;
     }
 }

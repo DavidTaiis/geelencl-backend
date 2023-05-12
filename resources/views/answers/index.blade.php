@@ -15,7 +15,7 @@
     @include('partials.modal',[
     'title'=>'Crear respuesta',
     'id'=>'modal',
-    'size'=>'modal-lg',
+    'size'=>'modal-md',
     'action_buttons'=>[
         [
         'type'=>'submit',

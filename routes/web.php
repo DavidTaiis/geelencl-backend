@@ -115,17 +115,24 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         Route::post('/save/uploads', 'ManualController@postSaveUpload')->name('uploadManual');
     });
 
+//Rol proveedor
     Route::group(['prefix' => 'providersCompany'], function () {
         Route::get('/', 'ProviderCompanyController@index')->name('viewIndexProviderCompany');
         Route::post('/save', 'ProviderCompanyController@postSave')->name('saveProviderCompany');
     });
 
-
+//Rol Empresa
     Route::group(['prefix' => 'companyProviders'], function () {
         Route::get('/', 'CompanyProvidersController@index')->name('viewIndexCompanyProviders');
         Route::get('/list', 'CompanyProvidersController@getList')->name('getListDataCompanyProviders');
         Route::get('/{id?}', 'CompanyProvidersController@indexInformation')->name('viewIndexInformationProvider');
     });
+
+    Route::group(['prefix' => 'profileCompany'], function () {
+        Route::get('/', 'CompanyController@indexProfile')->name('viewIndexCompanyProfile');
+        Route::post('/save', 'CompanyController@postSaveProfile')->name('saveCompanyProfile');
+    });
+
 });
 
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {

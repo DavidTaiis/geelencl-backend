@@ -3,13 +3,12 @@
 <div class="card card-custom">
     <div class="card-header flex-wrap py-5">
         <div class="card-title">
-                <form method="POST" enctype="multipart/form-data">
-                    @csrf
+        
             <h3 class="card-label">Formulario de proveedor</h3>
         </div>
         <div class="card-toolbar">
             <button type="button" class="btn btn-primary mr-2 p-4">Estado</button>
-            <button type="button" class="btn btn-info p-4">Enviado</button>
+            <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button>
         </div>
     </div>
     <hr>
@@ -150,7 +149,7 @@
                                         @php
                                         $answerSaved = true; 
                                         @endphp
-                                        <p>Medio de verificación guardado para visualizar presiona aquí <a href="{{$saved->directory }}" target="_blank">Ver documento</a></p>
+                                        <p>Medio de verificación guardado para visualizar presiona aquí <a href="{{config('constants.urlDirection')}}{{$saved->directory }}" target="_blank">Ver documento</a></p>
                                          <br>
                     
                                         @endif
@@ -169,8 +168,7 @@
                 </div>
             </div>
             @endforeach
-        </form>
-          
+     
 
 </div>
 <input id="action_get_form" type="hidden" value="{{ route("viewIndexProviderCompany") }}"/>

@@ -8,8 +8,11 @@
             <h3 class="card-label">Formulario de proveedor</h3>
         </div>
         <div class="card-toolbar">
-            <button type="submit" class="btn btn-primary mr-2 p-4">Guardar</button>
-            <button type="button" class="btn btn-info p-4">Enviar</button>
+          @if ($provider->statusInformation != 'Enviado')
+          <button type="submit" name ="action" value="Guardar" class="btn btn-primary mr-2 p-4">Guardar</button>
+            <button type="submit" name= "action" value="Enviar" class="btn btn-info p-4">Enviar</button>
+            
+          @endif
         </div>
     </div>
     <hr>

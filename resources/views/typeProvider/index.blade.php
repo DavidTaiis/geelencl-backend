@@ -15,7 +15,7 @@
     @include('partials.modal',[
     'title'=>'Crear tipo de proveedor',
     'id'=>'modal',
-    'size'=>'modal-lg',
+    'size'=>'modal-md',
     'action_buttons'=>[
         [
         'type'=>'submit',

@@ -53,7 +53,7 @@ return [
     ],
     'roles' => [
         'role_administrator' => 'Administrador',
-        'role_operator' => 'Operador',
+        'role_operator' => 'Proveedor',
         'role_client' => 'Cliente',
     ],
     'tax' => (float)env('TAX_VALUE', 0),
@@ -65,5 +65,6 @@ return [
     'nameImageParameter' => 'profile',
     'nameImageParameterProduct' => 'Image',
     'firebasekey' => env('FIREBASE_CREDENTIALS'),
+    'urlDirection' => env('APP_URL')
 
 ];

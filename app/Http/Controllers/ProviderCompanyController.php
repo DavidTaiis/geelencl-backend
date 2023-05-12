@@ -77,6 +77,13 @@ class ProviderCompanyController extends MyBaseController
             $provider->direction = trim($data['direction']);
             $provider->phone_number = trim($data['phoneNumber']);
             $provider->email = trim($data['email']);
+            if($data['action'] == 'Guardar'){
+                $provider->statusInformation = 'Guardado';
+            }
+            else{
+                $provider->statusInformation = 'Enviado';
+
+            }
             $provider->save();
 
             $sections = Section::query()->get();
@@ -146,4 +153,5 @@ class ProviderCompanyController extends MyBaseController
             return Response::json(['status' => 'error', 'messageDev' => $e->getMessage()]);
         }
     }
+
 }
