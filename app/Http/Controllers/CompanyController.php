@@ -118,6 +118,9 @@ class CompanyController extends MyBaseController
             $company->direction = trim($data['direction']);
             $company->phone_number = trim($data['phone_number']);
             $company->status = trim($data['status']);
+            $company->ruc = trim($data['ruc']);
+            $company->direction2 = trim($data['direction2']);
+            $company->mobile_number = trim($data['mobile_number']);
             $company->save();
             //Imágenes
             $imageController = new ImageController();
@@ -179,6 +182,10 @@ class CompanyController extends MyBaseController
     public function postSaveProfile(){
         $data = Request::all();
         $user = User::find(Auth::user()->id);
+        $user->name = trim($data['administrador_name']);
+        $user->email = trim($data['email']);
+        $user->save();
+
         $company = Company::where('users_id', $user->id)->first();
 
         $company->comercial_name = $data['comercial_name'];
@@ -186,7 +193,9 @@ class CompanyController extends MyBaseController
         $company->email = $data['email'];
         $company->direction = $data['direction'];
         $company->phone_number = $data['phoneNumber'];
-
+        $company->ruc = trim($data['ruc']);
+        $company->mobile_number = trim($data['mobile_number']);
+        $company->direction2 = trim($data['direction2']);
         $company->save();
 
         return redirect()->route('viewIndexCompanyProfile')->with('success','Datos actualizados exitosamente');;

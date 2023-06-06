@@ -30,23 +30,47 @@
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
                     <div class="form-group row">
-                      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre comercial:</label>
+                      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre comercial :</label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputEmail3" name="comercialName" placeholder="Rtechi" value="{{$provider->comercial_name}}">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre legal:</label>
+                      <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre del proveedor :</label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputPassword3" name="legalName" placeholder="Research Technology and transfer" value="{{$provider->legal_name}}">
                       </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección oficinas:</label>
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección 1 :</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="inputPassword3" name="direction" placeholder="Av. ejemplo" value="{{$provider->direction}}">
                         </div>
                     </div>
+                    <div class="form-group row">
+                      <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección 2 :</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputPassword3" name="direction2" placeholder="Av. ejemplo" value="{{$provider->direction2}}">
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Ruc :</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPassword3" name="ruc" placeholder="1000000002001" value="{{$provider->direction2}}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Teléfono :</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPassword3" name="phoneNumber" placeholder="0620000000" value="{{$provider->phone_number}}">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Celular :</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPassword3" name="mobile_number" placeholder="0999999999" value="{{$provider->mobile_number}}">
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -61,14 +85,14 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
               <div class="card-body">
      
+                <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre :</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPassword3" name="name" placeholder="Jose Perez" value="{{$user->name}}" readonly>
+                  </div>
+                </div>
                     <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Teléfono:</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword3" name="phoneNumber" placeholder="0999999999" value="{{$provider->phone_number}}">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">email:</label>
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">email :</label>
                         <div class="col-sm-10">
                           <input type="email" class="form-control" id="inputPassword3" name="email" placeholder="ejemplo@ejemplo.com" value="{{$provider->email}}">
                         </div>

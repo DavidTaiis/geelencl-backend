@@ -29,7 +29,7 @@ $(function () {
                 },
                 {
                     data: "legal_name",
-                    title: 'Nombre Legal'
+                    title: 'Nombre de la empresa'
                 },
                 {
                     data: "direction",

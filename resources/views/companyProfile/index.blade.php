@@ -28,26 +28,58 @@
             <input type="text" class="form-control" name="comercial_name" value="{{$company->comercial_name}}">
           </div>
           <div class="form-group col-md-6">
-            <label for="inputPassword4">Nombre legal:</label>
+            <label for="inputPassword4">Nombre de la empresa:</label>
             <input type="text" class="form-control" name="legal_name" value="{{$company->legal_name}}">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputEmail4">Correo:</label>
-            <input type="email" class="form-control" name="email" value="{{$company->email}}">
+            <label for="inputEmail4">Representate legal:</label>
+            <input type="text" class="form-control" name="administrador_name" value="{{$company->user->name}}">
           </div>
           <div class="form-group col-md-6">
-            <label for="inputPassword4">Dirección:</label>
+            <label for="inputEmail4">Ruc:</label>
+            <input type="text" class="form-control" name="ruc" value="{{$company->ruc}}" maxlength="13">
+          </div>
+
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Correo:</label>
+            <input type="email" class="form-control" name="email" value="{{$company->email}}" readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Estado:</label>
+            @if ($company->status == 'ACTIVE')
+            <input type="text" class="form-control" name="estado" value="ACTIVA" readonly>
+            @endif
+            @if ($company->status != 'ACTIVE')
+            <input type="text" class="form-control" name="estado" value="INACTIVA" readonly>
+            @endif
+
+       
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Dirección 1:</label>
             <input type="text" class="form-control" name="direction" value="{{$company->direction}}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Dirección 2:</label>
+            <input type="text" class="form-control" name="direction2" value="{{$company->direction2}}">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputEmail4">Teléfono:</label>
-            <input type="email" class="form-control" name="phoneNumber" value="{{$company->phone_number}}">
+            <input type="text" class="form-control" name="phoneNumber" value="{{$company->phone_number}}" maxlength="10">
           </div>
-
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Celular:</label>
+            <input type="text" class="form-control" name="mobile_number" value="{{$company->mobile_number}}" maxlength="10">
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <br>

@@ -39,7 +39,7 @@ class ProviderCompanyController extends MyBaseController
             $provider = new Provider();
         }
 
-        $providerId = $provider->id;
+        $providerId = $provider->typeProvider->id;
         $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
          $sectionsTypeProvider->where(function ($subQuery) use ($providerId) {
             $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($providerId) {
@@ -77,6 +77,9 @@ class ProviderCompanyController extends MyBaseController
             $provider->direction = trim($data['direction']);
             $provider->phone_number = trim($data['phoneNumber']);
             $provider->email = trim($data['email']);
+            $provider->direction2 = trim(['direction2']);
+            $provider->ruc = trim(['ruc']);
+            $provider->mobile_number = trim(['mobile_number']);
             if($data['action'] == 'Guardar'){
                 $provider->statusInformation = 'Guardado';
             }

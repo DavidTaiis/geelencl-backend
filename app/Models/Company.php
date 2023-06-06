@@ -45,7 +45,10 @@ class Company extends Model
         'email',
         'direction',
         'phone_number',
-        'status'
+        'status',
+        'ruc',
+        'direction2',
+        'mobile_number'
     ];
 
     /**
@@ -60,7 +63,10 @@ class Company extends Model
         'email' => 'string',
         'direction' => 'string',
         'phone_number'=> 'string',
-        'status' => 'string'
+        'status' => 'string',
+        'ruc' => 'string',
+        'direction2' => 'string',
+        'mobile_number => string'
     ];
 
     /**

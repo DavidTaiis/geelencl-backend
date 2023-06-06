@@ -75,7 +75,6 @@ class UserController extends MyBaseController
 
     public function getForm($id = null)
     {
-
         $method = 'POST';
         $user = isset($id) ? User::find($id) : new User();
         $authUser = Auth::user();
@@ -107,7 +106,6 @@ class UserController extends MyBaseController
                 }
             }
             $user->name = trim($data['name']);
-            $user->identification_card = trim($data['identification_card']);
             $user->phone_number = trim($data['phone_number']);
             $user->email= trim($data['email']);
             if (isset($data['password'])) {
@@ -124,6 +122,11 @@ class UserController extends MyBaseController
             DB::rollback();
             return Response::json(['status' => 'error', 'messageDev' => $e->getMessage()]);
         }
+    }
+    public function postIsEmailUnique()
+    {
+        $validation = Validator::make(Request::all(), ['name' => 'unique:users,email,' . Request::get('id') . ',id']);
+        return Response::json($validation->passes() ? true : false);
     }
 
 }

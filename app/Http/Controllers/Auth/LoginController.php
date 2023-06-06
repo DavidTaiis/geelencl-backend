@@ -64,6 +64,7 @@ class LoginController extends Controller
                 }
                 $rolesProveedor = $user->hasRole(['Proveedor']);
                 $rolesEmpresa = $user->hasRole(['Empresa']);
+                $rolesAdministrador = $user->hasRole(['Administrador']);
 
                 if ($rolesProveedor) {
                    
@@ -73,6 +74,10 @@ class LoginController extends Controller
                    
                     return redirect(route('home'));
                 } 
+                if ($rolesAdministrador) {
+                   
+                    return redirect(route('home'));
+                }
             } else {
                 Session::put('email', $data['email']);
                 return redirect(route('login'))->with('failedPassword', Lang::get('auth.failedPassword'));

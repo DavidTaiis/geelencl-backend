@@ -47,7 +47,11 @@ class Provider extends Model
         'direction',
         'phone_number',
         'status',
-        'qualification'
+        'qualification',
+        'ruc',
+        'direction2',
+        'mobile_number',
+        'statusInformation'
     ];
 
     /**
@@ -63,7 +67,11 @@ class Provider extends Model
         'direction' => 'string',
         'phone_number'=> 'string',
         'status' => 'string',
-        'qualification' => 'string'
+        'qualification' => 'string',
+        'ruc' => 'string',
+        'direction2' => 'string',
+        'mobile_number' => 'string',
+        'statusInformation' => 'string',
     ];
 
     /**
@@ -78,5 +86,9 @@ class Provider extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id');
+    }
+    public function typeProvider()
+    {
+        return $this->belongsTo(TypeProvider::class, 'tipo_proveedor_id');
     }
 }

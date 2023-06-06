@@ -29,13 +29,22 @@ $(function () {
                 },
                 {
                     data: "legal_name",
-                    title: 'Nombre Legal'
+                    title: 'Nombre del proveedor'
                 },
                 {
                     data: "direction",
                     title: 'Dirección'
                 },
                 {
+                    data: "statusInformation",
+                    title: 'Estado'
+                },
+                {
+                    data: "qualification",
+                    title: 'Calificación'
+
+                },
+               /*  {
                     data: "status",
                     title: 'Estado',
                     render: function (data, type, row, meta) {
@@ -45,7 +54,7 @@ $(function () {
                             return '<span class="label label-danger label-pill label-inline">Inactivo</span>';
                         }
                     }
-                },
+                }, */
                 {
                     data: null,
                     title: 'Acciones',

@@ -126,6 +126,10 @@ class ProviderController extends MyBaseController
             $provider->phone_number = trim($data['phone_number']);
             $provider->status = trim($data['status']);
             $provider->empresas_id = trim($data['company_id']);
+            $provider->ruc = trim($data['ruc']);
+            $provider->direction2 = trim($data['direction2']);
+            $provider->mobile_number = trim($data['mobile_number']);
+            $provider->statusInformation = 'Creado';
             $provider->save();
             
             //Imágenes
