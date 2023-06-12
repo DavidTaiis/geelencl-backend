@@ -29,16 +29,21 @@ $(function () {
                     title: 'Teléfono',
                 },
                 {
-                    data: 'status',
+                    data: 'statusInformation',
                     title: 'Estado',
                     render: function (data, type, row, meta) {
-                        if (row.status === 'ACTIVE') {
-                            return '<span class="label label-primary label-inline font-weight-lighter">Activo</span>';
+                        if (row.statusInformation === null) {
+                            return '<span class="label label-primary label-inline font-weight-lighter">Creado</span>';
                         } else {
-                            return '<span class="label label-danger label-pill label-inline">Inactivo</span>';
+                            return '<span class="label label-success label-pill label-inline">' + row.statusInformation +'  </span>';
                         }
                     },
                 },
+                {
+                    data: 'qualification',
+                    title: 'Calificación',
+                },
+
                 {
                     data: null,
                     title: 'Acciones',
