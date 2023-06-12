@@ -56,7 +56,6 @@ class ProviderCompanyController extends MyBaseController
         ]);
     }
     public function postSave(Request $request){
-        
         try {
             DB::beginTransaction();
             $user = User::find(Auth::user()->id);
@@ -64,22 +63,22 @@ class ProviderCompanyController extends MyBaseController
 
             $user = User::find(Auth::user()->id);
             $data = $request->all();
-            //dd($data);
 
             $provider = Provider::where('users_id', Auth::user()->id)->first();
 
             if(!$provider){
                 $provider = new Provider();
             }
-
+           
             $provider->comercial_name = trim($data['comercialName']);
             $provider->legal_name = trim($data['legalName']);
             $provider->direction = trim($data['direction']);
             $provider->phone_number = trim($data['phoneNumber']);
             $provider->email = trim($data['email']);
-            $provider->direction2 = trim(['direction2']);
-            $provider->ruc = trim(['ruc']);
-            $provider->mobile_number = trim(['mobile_number']);
+            $provider->direction2 = trim($data['direction2']);
+            $provider->ruc = trim($data['ruc']);
+            $provider->mobile_number = trim($data['mobile_number']);
+           
             if($data['action'] == 'Guardar'){
                 $provider->statusInformation = 'Guardado';
             }
@@ -88,6 +87,8 @@ class ProviderCompanyController extends MyBaseController
 
             }
             $provider->save();
+
+            $deleteResp = QuestionProvider::where('proveedor_id', $provider->id)->delete();
 
             $sections = Section::query()->get();
             foreach ($sections as $section) {
@@ -103,10 +104,11 @@ class ProviderCompanyController extends MyBaseController
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
                                 $questionProvider->proveedor_id = $user->id;
-                                $questionProvider->empresas_id = 1;
+                                $questionProvider->empresas_id = $provider->empresa_id;
                                 $questionProvider->respuestas_id = $answer->id;
-                                $questionProvider->value = $data["answerQuestion"."-".$question->id."-".$answer->id];
-   
+                                $questionProvider->section_id = $section->id;
+                                $answerSave = Answers::find($data["answerQuestion"."-".$question->id])->first();
+                                $questionProvider->value = $answerSave->answer;
                             }
                         }
                         if($question->type_question == 'MULTIPLE'){ 
@@ -120,8 +122,10 @@ class ProviderCompanyController extends MyBaseController
                                 $questionProvider->preguntas_id = $question->id;
                                 $questionProvider->proveedor_id = $user->id;
                                 $questionProvider->empresas_id = 1;
+                                $questionProvider->section_id = $section->id;
                                 $questionProvider->respuestas_id = $data["answerQuestion"."-".$question->id];
-                                $questionProvider->value = "true";
+                                $answerSave = Answers::find($data["answerQuestion"."-".$question->id]);
+                                $questionProvider->value = $answerSave->answer;
                             }
                         }
                         
@@ -146,11 +150,42 @@ class ProviderCompanyController extends MyBaseController
                     if(isset($questionProvider) && $questionProvider != null){
                          $questionProvider->save();
                     }
+
+                    
                    
                 }
             }
             DB::commit();
-            return redirect()->route('viewIndexProviderCompany');
+            if($data['action'] == 'Guardar'){
+                return redirect(route('viewIndexProviderCompany'))->with('success', 'Formulario guardado correctamente');
+            }else{
+
+                $resultados = QuestionProvider::where('proveedor_id', $provider->id)->groupBy('section_id')->get();
+                $calificacionFinal = 0;
+                foreach ($resultados as $res){
+                   $valorSection = Section::find($res->section_id);
+                   
+                    $totalRespuestas = QuestionProvider::query()
+                    ->where('proveedor_id', $provider->id)
+                    ->where('empresas_id', $provider->empresas_id)
+                    ->where('section_id', $res->section_id)->get();
+                    $valorPregunta = $valorSection->value / count($totalRespuestas);
+                    $countTotal = 0;
+                    foreach($totalRespuestas as $item){
+                        if($item->value == 'Si'){
+                            $countTotal += $valorPregunta;
+                        }
+                    }
+                    $calificacionFinal += $countTotal;
+                }
+                $provider->qualification = $calificacionFinal;
+                $provider->save();
+
+                return Response::json(['status' => 'success']);
+                
+            }
+             
+
         } catch (\Exception $e) {
             DB::rollback();
             return Response::json(['status' => 'error', 'messageDev' => $e->getMessage()]);

@@ -1,4 +1,5 @@
 var dataTable = null;
+const form_parameter = null
 $(function () {
     dataTable = initDataTableAjax($('#companyProviders_table'),
         {
@@ -51,3 +52,43 @@ $(function () {
         });
 });
 
+function saveForm() {
+    
+    Swal.fire({
+        title: "¿Estás seguro de enviar tu formulario?",
+        text: "No se podrá realizar cambios una vez enviado el formulario ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+        
+    }).then(function(result) {
+        if (result.value) {
+            const data = $('#form_provider_qualification').serializeArray(); 
+            const obj ={
+                name: "action",
+                value:"Enviar"
+            }
+            data.push(obj)
+            ajaxRequest($('#action_save').val(), {
+                type: 'POST',
+                data: data,
+                success_callback: function(data) {
+                window.location.reload()
+                },
+              });
+              Swal.fire({
+                icon: "success",
+                title: "Formulario enviado correctamente",
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        }
+    });
+
+}
+
+function test() {
+console.log("Holaaa")
+}

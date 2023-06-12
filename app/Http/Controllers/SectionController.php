@@ -95,6 +95,7 @@ class SectionController extends MyBaseController
                 }
             }
             $section->name = trim($data['name']);
+            $section->value = trim($data['value']);
             $section->status = trim($data['status']);
             
             $section->save();

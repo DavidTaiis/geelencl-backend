@@ -44,6 +44,7 @@ class Section extends Model
     protected $fillable = [
         'name',
         'status',
+        'value'
     ];
 
     /**
@@ -54,7 +55,8 @@ class Section extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
-        'status' => 'string'
+        'status' => 'string',
+        'value' => 'integer'
     ];
 
     /**

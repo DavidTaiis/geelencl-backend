@@ -51,7 +51,8 @@ class Provider extends Model
         'ruc',
         'direction2',
         'mobile_number',
-        'statusInformation'
+        'statusInformation',
+        'empresas_id'
     ];
 
     /**
@@ -72,6 +73,8 @@ class Provider extends Model
         'direction2' => 'string',
         'mobile_number' => 'string',
         'statusInformation' => 'string',
+        'empresas_id'=>'integer'
+
     ];
 
     /**

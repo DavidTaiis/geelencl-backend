@@ -45,7 +45,10 @@ class QuestionProvider extends Model
         'respuestas_id',
         'preguntas_id',
         'proveedor_id',
-        'value'
+        'section_id',
+        'value',
+        'directory'
+
     ];
 
     /**
@@ -58,7 +61,9 @@ class QuestionProvider extends Model
         'respuestas_id' => 'integer',
         'preguntas_id' => 'integer',
         'proveedor_id' => 'integer',
+        'section_id' => 'integer',
         'value' => 'string',
+        'directory' => 'string'
     ];
 
     /**

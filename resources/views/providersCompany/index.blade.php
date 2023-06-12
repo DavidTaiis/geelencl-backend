@@ -1,16 +1,50 @@
 @section('content')
 
+@if (Session('success'))
+
+<div class="alert alert-custom alert-notice alert-light-primary fade show" role="alert">
+    <div class="alert-icon"><i class="flaticon-folder-1"></i></div>
+    <div class="alert-text">{{ Session('success') }}</div>
+    <div class="alert-close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+        </button>
+    </div>
+</div>
+
+ @endif
+
+ @if ($provider->statusInformation == 'Enviado')
+
+<div class="alert alert-custom alert-notice alert-light-primary fade show" role="alert">
+    <div class="alert-icon"><i class="flaticon-paper-plane"></i></div>
+    <div class="alert-text">Formulario enviado correctamente</div>
+    <div class="alert-close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+        </button>
+    </div>
+</div>
+
+ @endif
 <div class="card card-custom">
     <div class="card-header flex-wrap py-5">
         <div class="card-title">
-                <form method="POST" enctype="multipart/form-data" action="{{ route('saveProviderCompany') }}">
-                    @csrf
+               
             <h3 class="card-label">Formulario de proveedor</h3>
         </div>
         <div class="card-toolbar">
           @if ($provider->statusInformation != 'Enviado')
+            <button onclick="saveForm()" name= "action" value="Enviar" class="btn btn-info p-4 m-2">Enviar</button>
+            
+          @endif
+          @if ($provider->statusInformation == 'Enviado')
+          <h3><b>Calificación: </b>{{$provider->qualification}}</h3> 
+          @endif
+          <form method="POST" enctype="multipart/form-data" action="{{ route('saveProviderCompany') }}" id="form_provider_qualification" name="form_provider_qualification">
+                    @csrf
+                    @if ($provider->statusInformation != 'Enviado')
           <button type="submit" name ="action" value="Guardar" class="btn btn-primary mr-2 p-4">Guardar</button>
-            <button type="submit" name= "action" value="Enviar" class="btn btn-info p-4">Enviar</button>
             
           @endif
         </div>
@@ -200,10 +234,10 @@
             </div>
             @endforeach
         </form>
-          
 
+        <input id="action_save" type="hidden" value="{{ route("saveProviderCompany")}}"/>
 </div>
-<input id="action_get_form" type="hidden" value="{{ route("viewIndexProviderCompany") }}"/>
-
-
+@endsection
+@section('additional-scripts')
+    <script src="{{asset("js/app/companyProviders/index.js")}}"></script>
 @endsection

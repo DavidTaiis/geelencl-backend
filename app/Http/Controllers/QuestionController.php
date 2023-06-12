@@ -135,11 +135,13 @@ class QuestionController extends MyBaseController
                 $answersQuestion->save();
             }else{
                 QuestionAnswers::query()->where('preguntas_id', $question->id)->delete();
+               
                 foreach ($data['answers'] as $answersId) {
                     $answersQuestion = QuestionAnswers::query()
-                        ->where('preguntas_id', $answersId)
-                        ->where('respuestas_id', $question->id)
+                        ->where('preguntas_id', $question->id  )
+                        ->where('respuestas_id', $answersId)
                         ->first() ?? new QuestionAnswers();
+                        
                     $answersQuestion->preguntas_id = $question->id;
                     $answersQuestion->respuestas_id = $answersId;
                     $answersQuestion->save();
