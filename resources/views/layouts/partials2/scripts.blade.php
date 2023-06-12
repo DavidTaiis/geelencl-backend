@@ -7,7 +7,7 @@
             "theme": {
                 "base": {
                     "white": "#ffffff",
-                    "primary": "#0BB783",
+                    "primary": "rgb(0,0,150)",
                     "secondary": "#E5EAEE",
                     "success": "#1BC5BD",
                     "info": "#8950FC",

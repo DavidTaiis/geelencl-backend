@@ -1,7 +1,7 @@
-<div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">
+<div id="kt_header_mobile" class="header-mobile header-mobile-fixed" style="background: #ffffff">
     <!--begin::Logo-->
     <a href="#">
-        <img alt="Logo" src="{{asset("images/logoBlanco.png")}}" class="max-h-30px"/>
+        <img alt="Logo" src="{{asset("images/logoGeelenc.png")}}" class="max-h-30px"/>
     </a>
     <!--end::Logo-->
     <!--begin::Toolbar-->

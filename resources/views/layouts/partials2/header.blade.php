@@ -1,6 +1,6 @@
 <div id="kt_header" class="header flex-column header-fixed">
     <!--begin::Top-->
-    <div class="header-top">
+    <div class="header-top" style="background: #ffffff">
         <!--begin::Container-->
         <div class="container">
             <!--begin::Left-->
@@ -141,16 +141,16 @@
                 <!--begin::User-->
                 <div class="topbar-item">
                     <div
-                            class="btn btn-icon btn-hover-transparent-white w-auto d-flex align-items-center btn-lg px-2"
+                            class="btn btn-icon btn-hover-transparent-primary w-auto d-flex align-items-center btn-lg px-2"
                             id="kt_quick_user_toggle">
                         <div class="d-flex flex-column text-right pr-3">
-                            <span class="text-white opacity-50 font-weight-bold font-size-sm d-none d-md-inline">
+                            <span class="text-primary opacity-50 font-weight-bold font-size-sm d-none d-md-inline">
                                 {{ Auth::user()->provider_id ? Auth::user()->provider->name: "" }}
                             </span>
-                            <span class="text-white font-weight-bolder font-size-sm d-none d-md-inline">{{ Auth::user()->name }}</span>
+                            <span class="text-primary font-weight-bolder font-size-sm d-none d-md-inline">{{ Auth::user()->name }}</span>
                         </div>
                         <span class="symbol symbol-35">
-                            <span class="symbol-label font-size-h5 font-weight-bold text-white bg-white-o-30">
+                            <span class="symbol-label font-size-h5 font-weight-bold text-primary bg-white-o-30">
                                 {{substr(Auth::user()->name,0,1)}}
                             </span>
                         </span>

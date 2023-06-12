@@ -8,7 +8,7 @@
     </div>
    
     </div>
-    <div class="col-md-6" style="background-color:#0BB783;">
+    <div class="col-md-6" style="background-color: rgb(0,150,0);">
     <div class="col-md-8" style="margin-top:100px; margin-left: 100px; ">
     <form  method="POST"
                               action="{{ route('customLogin') }}">
@@ -45,7 +45,7 @@
                             <!--end::Form group-->
                             <!--begin::Action-->
                             <div class="pb-lg-0 pb-5">
-                                <button type="submit" id="kt_login_singin_form_submit_button" class="font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3" style="background-color: #000096;border-radius: 14px;color: white;border-color: #000096; margin-left: 190px;">Ingresar</button>
+                                <button type="submit" id="kt_login_singin_form_submit_button" class="font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3" style="background-color: #000000;border-radius: 14px;color: white;border-color: #000000; margin-left: 190px;">Ingresar</button>
                             </div>
                             <!--end::Action-->
                         </form>

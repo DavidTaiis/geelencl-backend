@@ -80,12 +80,12 @@
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
               <div class="card-body">
-                <div class="form-group row">
+         {{--        <div class="form-group row">
                   <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre :</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputPassword3" name="name" placeholder="Jose Perez" value="{{$provider->user->name}}" readonly>
                   </div>
-                </div>
+                </div> --}}
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">email:</label>
                         <div class="col-sm-10">
