@@ -8,7 +8,7 @@
             {!! Form::label('question','* Pregunta:', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
                 {!! Form::text('question', $question->question, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. ¿Deseas realizar una pregunta?', 'maxlength' => '64')) !!}
+                'off', 'placeholder' => 'ej. ¿Deseas realizar una pregunta?', 'maxlength' => '256')) !!}
             </div>
         </div>
     

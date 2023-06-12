@@ -66,12 +66,12 @@ class CompanyProvidersController extends MyBaseController
         $questionSaved = QuestionProvider::query()->where("proveedor_id", $id)->get();
         //dd($questionSaved);
         //Todo agregar empresas
-        $provider = Provider::where('users_id', $id)->first();
+        $provider = Provider::where('id', $id)->first();
 
         if(!$provider){
             $provider = new Provider();
         }
-
+        
         $providerId = $provider->id;
         $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
          $sectionsTypeProvider->where(function ($subQuery) use ($providerId) {
