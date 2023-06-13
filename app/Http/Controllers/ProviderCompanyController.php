@@ -88,7 +88,10 @@ class ProviderCompanyController extends MyBaseController
             }
             $provider->save();
 
-            $deleteResp = QuestionProvider::where('proveedor_id', $provider->id)->delete();
+            $deleteResp = QuestionProvider::query()
+            ->where('proveedor_id', $provider->id)
+            ->where('empresas_id', $provider->empresas_id)
+            ->delete();
 
             $sections = Section::query()->get();
             foreach ($sections as $section) {
@@ -117,7 +120,7 @@ class ProviderCompanyController extends MyBaseController
                                 ->where("proveedor_id", $user->id)
                                 ->where("preguntas_id", $question->id)
                                 ->where("respuestas_id", $data["answerQuestion"."-".$question->id])
-                                ->where("empresas_id", 1)->first();
+                                ->where("empresas_id", $provider->empresa_id)->first();
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
                                 $questionProvider->proveedor_id = $user->id;
