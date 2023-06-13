@@ -103,7 +103,7 @@ class ProviderCompanyController extends MyBaseController
                                 ->where("proveedor_id", $user->id)
                                 ->where("preguntas_id", $question->id)
                                 ->where("respuestas_id", $answer->id)
-                                ->where("empresas_id", 1)->first();
+                                ->where("empresas_id", $provider->empresas_id)->first();
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
                                 $questionProvider->proveedor_id = $user->id;
@@ -120,7 +120,7 @@ class ProviderCompanyController extends MyBaseController
                                 ->where("proveedor_id", $user->id)
                                 ->where("preguntas_id", $question->id)
                                 ->where("respuestas_id", $data["answerQuestion"."-".$question->id])
-                                ->where("empresas_id", $provider->empresa_id)->first();
+                                ->where("empresas_id", $provider->empresas_id)->first();
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
                                 $questionProvider->proveedor_id = $user->id;
