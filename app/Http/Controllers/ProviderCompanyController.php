@@ -30,10 +30,10 @@ class ProviderCompanyController extends MyBaseController
     public function index()
     {
         $user = User::find(Auth::user()->id);
-        $questionSaved = QuestionProvider::query()->where("proveedor_id", $user->id)->get();
+        $provider = Provider::where('users_id', Auth::user()->id)->first();
+        $questionSaved = QuestionProvider::query()->where("proveedor_id", $provider->id)->get();
         //dd($questionSaved);
         //Todo agregar empresas
-        $provider = Provider::where('users_id', Auth::user()->id)->first();
 
         if(!$provider){
             $provider = new Provider();
@@ -92,7 +92,7 @@ class ProviderCompanyController extends MyBaseController
             ->where('proveedor_id', $provider->id)
             ->where('empresas_id', $provider->empresas_id)
             ->delete();
-
+           
             $sections = Section::query()->get();
             foreach ($sections as $section) {
                 foreach ($section->questions as $question) {
@@ -100,13 +100,13 @@ class ProviderCompanyController extends MyBaseController
                         if($question->type_question == 'ABIERTA'){
                             if(isset($data["answerQuestion"."-".$question->id."-".$answer->id]) && $data["answerQuestion"."-".$question->id."-".$answer->id] != null){
                                 $questionProviderSaved = QuestionProvider::query()
-                                ->where("proveedor_id", $user->id)
+                                ->where("proveedor_id", $provider->id)
                                 ->where("preguntas_id", $question->id)
                                 ->where("respuestas_id", $answer->id)
                                 ->where("empresas_id", $provider->empresas_id)->first();
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
-                                $questionProvider->proveedor_id = $user->id;
+                                $questionProvider->proveedor_id = $provider->id;
                                 $questionProvider->empresas_id = $provider->empresa_id;
                                 $questionProvider->respuestas_id = $answer->id;
                                 $questionProvider->section_id = $section->id;
@@ -117,14 +117,14 @@ class ProviderCompanyController extends MyBaseController
                         if($question->type_question == 'MULTIPLE'){ 
                             if(isset($data["answerQuestion"."-".$question->id]) && $data["answerQuestion"."-".$question->id] != null){
                                 $questionProviderSaved = QuestionProvider::query()
-                                ->where("proveedor_id", $user->id)
+                                ->where("proveedor_id", $provider->id)
                                 ->where("preguntas_id", $question->id)
                                 ->where("respuestas_id", $data["answerQuestion"."-".$question->id])
                                 ->where("empresas_id", $provider->empresas_id)->first();
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
-                                $questionProvider->proveedor_id = $user->id;
-                                $questionProvider->empresas_id = 1;
+                                $questionProvider->proveedor_id = $provider->id;
+                                $questionProvider->empresas_id = $provider->empresas_id;
                                 $questionProvider->section_id = $section->id;
                                 $questionProvider->respuestas_id = $data["answerQuestion"."-".$question->id];
                                 $answerSave = Answers::find($data["answerQuestion"."-".$question->id]);
