@@ -21,13 +21,10 @@ $(function () {
             },
             columns: [
                 {
-                    data: 'comercial_name',
+                    data: 'legal_name',
                     title: 'Proveedor',
                 },
-                {
-                    data: 'phone_number',
-                    title: 'Teléfono',
-                },
+           
                 {
                     data: 'statusInformation',
                     title: 'Estado',
@@ -92,8 +89,4 @@ function saveForm() {
         }
     });
 
-}
-
-function test() {
-console.log("Holaaa")
 }

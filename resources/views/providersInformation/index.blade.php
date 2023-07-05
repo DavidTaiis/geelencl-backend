@@ -7,100 +7,27 @@
             <h3 class="card-label">Formulario de proveedor</h3>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary mr-2 p-4">Estado</button>
-            @if ($provider->statusInformation != null)
-            <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button>
+          <span class="badge badge-secondary py-4 px-4 mr-3">Estado: </span>
+            @if ($provider->statusInformation == 'Guardado')
+            <span class="badge badge-primary py-4 px-4">{{$provider->statusInformation}}</span>
+            {{-- <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button> --}}
+            @endif
+            @if ($provider->statusInformation == 'Calificado')
+            <span class="badge badge-danger py-4 px-4">{{$provider->statusInformation}} &nbsp; {{$provider->qualification}}</span>
+            {{-- <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button> --}}
             @endif
             @if ($provider->statusInformation == null)
-            <button type="button" class="btn btn-info p-4">Creado</button>
+            <span class="badge badge-info py-4 px-4">Creado</span>
+           {{--  <button type="button" class="btn btn-info p-4">Creado</button> --}}
     
             @endif
         </div>
     </div>
     <hr>
-    <h4 class="ml-8">Complete la información</h4>
+    <h4 class="ml-8">Califica de acuerdo a las respuestas ingresadas</h4>
     <div id="accordion">
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <i class="fas fa-angle-down"></i>Datos generales
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                    <div class="form-group row">
-                      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre comercial:</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" name="comercialName" placeholder="Rtechi" value="{{$provider->comercial_name}}" readonly>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre del proveedor:</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword3" name="legalName" placeholder="Research Technology and transfer" value="{{$provider->legal_name}}" readonly>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección 1 :</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputPassword3" name="direction" placeholder="Av. ejemplo" value="{{$provider->direction}}" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección 2 :</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword3" name="direction2" placeholder="Av. ejemplo" value="{{$provider->direction2}}" readonly>
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Ruc :</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputPassword3" name="ruc" placeholder="1000000002001" value="{{$provider->direction2}}" readonly>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Teléfono :</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" name="phoneNumber" placeholder="0620000000" value="{{$provider->phone_number}}" readonly>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Celular :</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" name="mobile_number" placeholder="0999999999" value="{{$provider->mobile_number}}" readonly>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h5 class="mb-0">
-                <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <i class="fas fa-angle-down"></i>Datos representante
-                </button>
-              </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-              <div class="card-body">
-                 <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre :</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" name="name" placeholder="Jose Perez" value="{{$provider->user->name}}" readonly>
-                  </div>
-                </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">email:</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputPassword3" name="email" placeholder="ejemplo@ejemplo.com" value="{{$provider->email}}" readonly>
-                        </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
+        <form method="POST" action = "{{ route('qualificationProvider') }}">
+            @csrf
             @foreach ($sections as $section )
             <div class="card">
                 <div class="card-header" id="heading{{$section->id}}">
@@ -117,7 +44,8 @@
                         
                         <div class="form-group col-md-10">
                             
-                            <h5>⮞ {{$question->question}}</h5>
+                          <h5> {{$question->order}} .- {{$question->question}}</h5>
+                          <br>
                             @php
                             $count = 1;
                             @endphp
@@ -169,6 +97,7 @@
                             @endforeach
                                  
                           </div>
+                          
                           <div class="col-md-10">
                             @php
                                         $answerSaved = false;
@@ -180,13 +109,22 @@
                                         @endphp
                                         <p>Medio de verificación guardado para visualizar presiona aquí <a href="{{config('constants.urlDirection')}}{{$saved->directory }}" target="_blank">Ver documento</a></p>
                                          <br>
-                    
+                                                            
                                         @endif
                                     @endforeach   
                                     @if (!$answerSaved)
                                     <p>Ningún documento ha sido subido aún.</p>
-                                    @endif                                 
-                            <br> <br> <br> 
+                                    @endif 
+                                    @if ($provider->statusInformation != 'Calificado')
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-2 col-form-label">Calificación: </label>
+                                        <div class="col-md-6">
+                                          <input type="number" class="form-control" name="qualification-{{$section->id}}-{{$question->id}}" id="staticEmail">
+                                        </div>
+                                      </div>      
+                                    @endif  
+                                                    
+                            <br>
                             
                         </div>
                         
@@ -197,10 +135,16 @@
                 </div>
             </div>
             @endforeach
-     
+            
+            <input type="hidden" name = "providerId" value="{{$provider->id}}">
+            <div style="text-align: right">
+                <button class="btn mr-4 mt-2 px-8" style="background: green; color:white" type="submit" onclick="
+                return confirm('¿Estás seguro que deseas calificar a este proveedor {{$provider->comercial_name}}?')"> Calificar </button></div>
+          
 
+            </form>
+        
 </div>
-<input id="action_get_form" type="hidden" value="{{ route("viewIndexProviderCompany") }}"/>
-
+<input id="action_save" type="hidden" value="{{ route("qualificationProvider") }}"/>
 
 @endsection

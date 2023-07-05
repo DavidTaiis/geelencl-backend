@@ -52,88 +52,8 @@
     <hr>
     <h4 class="ml-8">Complete la información</h4>
     <div id="accordion">
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                <i class="fas fa-angle-down"></i>Datos generales
-              </button>
-            </h5>
-          </div>
-      
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                    <div class="form-group row">
-                      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre comercial :</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" name="comercialName" placeholder="Rtechi" value="{{$provider->comercial_name}}">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre del proveedor :</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword3" name="legalName" placeholder="Research Technology and transfer" value="{{$provider->legal_name}}">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección 1 :</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputPassword3" name="direction" placeholder="Av. ejemplo" value="{{$provider->direction}}">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección 2 :</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword3" name="direction2" placeholder="Av. ejemplo" value="{{$provider->direction2}}">
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Ruc :</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputPassword3" name="ruc" placeholder="1000000002001" value="{{$provider->direction2}}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Teléfono :</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" name="phoneNumber" placeholder="0620000000" value="{{$provider->phone_number}}">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Celular :</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" name="mobile_number" placeholder="0999999999" value="{{$provider->mobile_number}}">
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h5 class="mb-0">
-                <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <i class="fas fa-angle-down"></i>Datos representante
-                </button>
-              </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-              <div class="card-body">
-     
-                <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre :</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" name="name" placeholder="Jose Perez" value="{{$user->name}}" readonly>
-                  </div>
-                </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">email :</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputPassword3" name="email" placeholder="ejemplo@ejemplo.com" value="{{$provider->email}}">
-                        </div>
-                    </div>
-                  </div>
-            </div>
-        </div>
+        <div class="card">    
+
             @foreach ($sections as $section )
             <div class="card">
                 <div class="card-header" id="heading{{$section->id}}">
@@ -150,7 +70,8 @@
                         
                         <div class="form-group col-md-10">
                             
-                            <h5>⮞ {{$question->question}}</h5>
+                            <h5> {{$question->order}} .- {{$question->question}}</h5>
+                            <br>
                             @php
                             $count = 1;
                             @endphp
@@ -216,13 +137,15 @@
                                          <p>Si deseas reemplazar el archivo, carga nuevamente tu medio de verificación 🡳</p>
                                         @endif
                                     @endforeach
+                            @if ($question->document == 'SI')
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFileLang" lang="es" name="fileQuestion-{{$question->id}}"  >
                                 <label class="custom-file-label" for="customFileLang">Seleccionar archivo de verificación</label>
                             </div>
+                            @endif
+                                              
                                     
-                                    
-                            <br> <br> <br> <br>
+                            <br> <br>
                             
                         </div>
                         
@@ -237,6 +160,7 @@
 
         <input id="action_save" type="hidden" value="{{ route("saveProviderCompany")}}"/>
 </div>
+    </div>
 @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/companyProviders/index.js")}}"></script>

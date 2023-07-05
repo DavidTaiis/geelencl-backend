@@ -14,6 +14,7 @@ use App\Models\Image;
 use App\Models\ImageParameter;
 use App\Http\Controllers\Multimedia\ImageController;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class ProviderController extends MyBaseController
 {
@@ -30,14 +31,20 @@ class ProviderController extends MyBaseController
     public function getList()
     {
         $data = Request::all();
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('users_id', $user->id)->first();
 
-        $query = Provider::query();
+        if ($user->id == 1) {
+            $query = Provider::query();
+        }else{
+            $query = Provider::query()->where('empresas_id', $company->id);
+        }
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
         if (isset($data['search']['value']) && $data['search']['value']) {
             $search = $data['search']['value'];
-            $query->where('provider.name', 'like', "$search%");
+            $query->where('provider.name', 'like', "%$search%");
             $recordsFiltered = $query->get()->count();
         }
         if (isset($data['start']) && $data['start']) {
@@ -100,6 +107,7 @@ class ProviderController extends MyBaseController
 
     public function postSave()
     {
+
         try {
             $data = Request::all();
 
@@ -111,24 +119,20 @@ class ProviderController extends MyBaseController
                 $user = User::find($provider->users_id);
                
             }
-            $user->name = trim($data['administrador_name']);
+            $user->name = trim($data['legal_name']);
             $user->email = trim($data['administrador_email']);
+            $user->code_user = trim($data['password']);
             $user->password = bcrypt($data['password']);
+
             $user->save();
             $user->syncRoles('Proveedor');
             
-            $provider->comercial_name = trim($data['comercial_name']);
             $provider->tipo_proveedor_id = trim($data['tipo_proveedor_id']);
             $provider->users_id = $user->id;
             $provider->legal_name = trim($data['legal_name']);
             $provider->email = trim($data['administrador_email']);
-            $provider->direction = trim($data['direction']);
-            $provider->phone_number = trim($data['phone_number']);
             $provider->status = trim($data['status']);
             $provider->empresas_id = trim($data['company_id']);
-            $provider->ruc = trim($data['ruc']);
-            $provider->direction2 = trim($data['direction2']);
-            $provider->mobile_number = trim($data['mobile_number']);
             $provider->statusInformation = 'Creado';
             $provider->save();
             

@@ -30,30 +30,36 @@ class ProviderCompanyController extends MyBaseController
     public function index()
     {
         $user = User::find(Auth::user()->id);
-        $provider = Provider::where('users_id', Auth::user()->id)->first();
-        $questionSaved = QuestionProvider::query()->where("proveedor_id", $provider->id)->get();
-        //dd($questionSaved);
-        //Todo agregar empresas
 
-        if(!$provider){
-            $provider = new Provider();
+        if($user->id == 1) {
+            $this->layout->content = View::make('denied');
+        }else{
+            $provider = Provider::where('users_id', Auth::user()->id)->first();
+            $questionSaved = QuestionProvider::query()->where("proveedor_id", $provider->id)->get();
+            //dd($questionSaved);
+            //Todo agregar empresas
+
+            if(!$provider){
+                $provider = new Provider();
+            }
+
+            $providerId = $provider->typeProvider->id;
+            $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
+            $sectionsTypeProvider->where(function ($subQuery) use ($providerId) {
+                $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($providerId) {
+                        $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $providerId);
+                    });
+            }); 
+            
+            $sections = $sectionsTypeProvider->get();
+            
+            $this->layout->content = View::make('providersCompany.index', [
+                'user' => $user,
+                'sections' => $sections,
+                'questionSaved' => $questionSaved,
+                'provider'   =>    $provider
+            ]);
         }
-
-        $providerId = $provider->typeProvider->id;
-        $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
-         $sectionsTypeProvider->where(function ($subQuery) use ($providerId) {
-            $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($providerId) {
-                    $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $providerId);
-                });
-        }); 
-        
-        $sections = $sectionsTypeProvider->get();
-        $this->layout->content = View::make('providersCompany.index', [
-            'user' => $user,
-            'sections' => $sections,
-            'questionSaved' => $questionSaved,
-             'provider'   =>    $provider
-        ]);
     }
     public function postSave(Request $request){
         try {
@@ -69,16 +75,7 @@ class ProviderCompanyController extends MyBaseController
             if(!$provider){
                 $provider = new Provider();
             }
-           
-            $provider->comercial_name = trim($data['comercialName']);
-            $provider->legal_name = trim($data['legalName']);
-            $provider->direction = trim($data['direction']);
-            $provider->phone_number = trim($data['phoneNumber']);
-            $provider->email = trim($data['email']);
-            $provider->direction2 = trim($data['direction2']);
-            $provider->ruc = trim($data['ruc']);
-            $provider->mobile_number = trim($data['mobile_number']);
-           
+                     
             if($data['action'] == 'Guardar'){
                 $provider->statusInformation = 'Guardado';
             }
@@ -166,8 +163,7 @@ class ProviderCompanyController extends MyBaseController
                 $resultados = QuestionProvider::where('proveedor_id', $provider->id)->groupBy('section_id')->get();
                 $calificacionFinal = 0;
                 foreach ($resultados as $res){
-                   $valorSection = Section::find($res->section_id);
-                   
+                   $valorSection = Section::find($res->section_id);                   
                     $totalRespuestas = QuestionProvider::query()
                     ->where('proveedor_id', $provider->id)
                     ->where('empresas_id', $provider->empresas_id)
@@ -181,7 +177,7 @@ class ProviderCompanyController extends MyBaseController
                     }
                     $calificacionFinal += $countTotal;
                 }
-                $provider->qualification = $calificacionFinal;
+                /* $provider->qualification = $calificacionFinal; */
                 $provider->save();
 
                 return Response::json(['status' => 'success']);

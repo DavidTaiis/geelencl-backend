@@ -97,6 +97,7 @@ class SectionController extends MyBaseController
             $section->name = trim($data['name']);
             $section->value = trim($data['value']);
             $section->status = trim($data['status']);
+            $section->total_points = trim($data['totalPoints']);
             
             $section->save();
             SectionTypeProvider::query()->where('secciones_id', $section->id)->delete();

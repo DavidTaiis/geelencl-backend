@@ -67,8 +67,18 @@ class QuestionController extends MyBaseController
     public function getForm($sectionId, $id = null)
     {
         $method = 'POST';
+        $countQustion = 0;
+
+      
+
         $section = Section::find($sectionId);
         $question = isset($id) ? Question::find($id) : new Question();
+
+        $query = Question::query()->where('secciones_id', $sectionId);
+        $recordsTotal = $query->get()->count();
+        
+        $countQustion = isset($id) ? $question->order : $recordsTotal + 1;
+    
 
         $answers = Answers::where('answer', "!=", "Abierta")->pluck('answer', 'id')->toArray();
         $answersSelected = $question->id ? QuestionAnswers::query()
@@ -94,7 +104,8 @@ class QuestionController extends MyBaseController
             'answers' => $answers,
             'answersSelected' => $answersSelected,
             'typeProviders' => $providers,
-            'typeProvidersSelected' => $providersSelected
+            'typeProvidersSelected' => $providersSelected,
+            'numQuestion' => $countQustion
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -123,8 +134,10 @@ class QuestionController extends MyBaseController
                     $question->status = $data['status'];
                 }
             }
+            $question->order = trim($data['order']);
             $question->question = trim($data['question']);
             $question->status = trim($data['status']);
+            $question->document = trim($data['document']);
             $question->save();
             $answerOpen = Answers::where('answer', 'Abierta')->first();
             if ($question->type_question == 'ABIERTA') {

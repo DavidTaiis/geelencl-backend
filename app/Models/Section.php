@@ -44,7 +44,8 @@ class Section extends Model
     protected $fillable = [
         'name',
         'status',
-        'value'
+        'value',
+        'total_points'
     ];
 
     /**
@@ -56,7 +57,8 @@ class Section extends Model
         'id' => 'integer',
         'name' => 'string',
         'status' => 'string',
-        'value' => 'integer'
+        'value' => 'integer',
+        'total_points' => 'string'
     ];
 
     /**

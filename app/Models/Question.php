@@ -45,7 +45,9 @@ class Question extends Model
         'secciones_id',
         'question',
         'type_question',
-        'status'
+        'status',
+        'order',
+        'document'
     ];
 
     /**
@@ -58,7 +60,9 @@ class Question extends Model
         'secciones_id' => 'integer',
         'question' => 'string',
         'type_question' => 'string',
-        'status' => 'string'
+        'status' => 'string',
+        'order' => 'integer',
+        'documente' => 'string'
     ];
 
     /**

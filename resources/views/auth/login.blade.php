@@ -8,7 +8,7 @@
     </div>
    
     </div>
-    <div class="col-md-6" style="background-color: rgb(0,150,0);">
+    <div class="col-md-6" style="background-color: rgb(0,0,150);">
     <div class="col-md-8" style="margin-top:100px; margin-left: 100px; ">
     <form  method="POST"
                               action="{{ route('customLogin') }}">

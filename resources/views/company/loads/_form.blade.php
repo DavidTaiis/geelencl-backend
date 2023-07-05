@@ -62,10 +62,11 @@
             </div>
         </div>
         <div class="form-group">
-        {!! Form::label('name','* Contraseña:', array('class' => 'control-label col-md-12')) !!}
-        <div class="col-md-12">
-            {!! Form::password('password', array('class' => 'form-control', "id"=>'password', 'autocomplete' =>
-            'new-password', 'maxlength' => '64')) !!}</div>
+            {!! Form::label('name','* Contraseña:', array('class' => 'control-label col-md-12')) !!}
+            <div class="col-md-12">
+                {!! Form::text('password', $user->code_user, array('class' => 'form-control', "id"=>'password', 'autocomplete' =>
+                'off', 'maxlength' => '64')) !!}
+            </div>
         </div>
         <div class="form-group">
             

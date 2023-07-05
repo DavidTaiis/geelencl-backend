@@ -1,6 +1,6 @@
 @section('content')
     @include('partials.admin_view',[
-    'title'=>'Administración de Proveedoress',
+    'title'=>'Administración de Proveedores',
     'icon'=>'<i class="flaticon-cogwheel-2"></i>',
     'id_table'=>'provider_table',
     'action_buttons'=>[

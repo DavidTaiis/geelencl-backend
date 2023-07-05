@@ -54,12 +54,12 @@ $(function () {
 });
 
 function editSection(id) {
-    modal_section.find('.modal-title').html('Editar respuesta');
+    modal_section.find('.modal-title').html('Editar sección');
     getForm($('#action_get_form').val() + '/' + id);
 }
 
 function newSection() {
-    modal_section.find('.modal-title').html('Crear respuesta');
+    modal_section.find('.modal-title').html('Crear sección');
     getForm($('#action_get_form').val());
 }
 

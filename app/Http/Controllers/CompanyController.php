@@ -174,9 +174,15 @@ class CompanyController extends MyBaseController
     { 
         $user = User::find(Auth::user()->id);
         $company = Company::where('users_id', $user->id)->first();
-        $this->layout->content = View::make('companyProfile.index', [
-            'company' => $company
-        ]);
+        if ($user->id == 1) {
+            $this->layout->content = View::make('denied', [
+            ]);
+        }else{
+            $this->layout->content = View::make('companyProfile.index', [
+                'company' => $company
+            ]);
+        }
+       
     }
 
     public function postSaveProfile(){
@@ -196,6 +202,7 @@ class CompanyController extends MyBaseController
         $company->ruc = trim($data['ruc']);
         $company->mobile_number = trim($data['mobile_number']);
         $company->direction2 = trim($data['direction2']);
+        $user->code_user = trim($data['password']);
         $company->save();
 
         return redirect()->route('viewIndexCompanyProfile')->with('success','Datos actualizados exitosamente');;

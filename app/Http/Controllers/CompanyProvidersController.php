@@ -35,7 +35,12 @@ class CompanyProvidersController extends MyBaseController
         $data = Request::all();
         $user = User::find(Auth::user()->id);
         $company = Company::where('users_id', $user->id)->first();
-        $query = Provider::query()->where('empresas_id', $company->id);
+        if ($user->id == 1) {
+            $query = Provider::query();
+        }else{
+            $query = Provider::query()->where('empresas_id', $company->id);
+        }
+        
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
@@ -86,6 +91,46 @@ class CompanyProvidersController extends MyBaseController
             'questionSaved' => $questionSaved,
              'provider'   =>    $provider
         ]);
+    }
+
+    public function qualification(){
+        try {
+            DB::beginTransaction();
+
+            $data = Request::all();
+            $providerId = $data['providerId'];
+            $provider = Provider::find($providerId);
+            $questionSaved = QuestionProvider::query()->where("proveedor_id", $providerId)->get();
+            $idSecctionProvider = QuestionProvider::query()->where("proveedor_id", $providerId)->groupBy('section_id')->pluck('section_id');
+            $sections = Section::whereIn('id', $idSecctionProvider)->get();
+            $totalPorcentajeProvider = 0;
+            foreach ($sections as $section) {
+            $porcentajeSection = 0;
+            $sectionTotal = 0;
+                foreach ($questionSaved as $question) {
+                    if($data['qualification-'.$question->section_id.'-'.$question->preguntas_id]){
+                        $question->qualification = $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
+                        $question->save();                        
+                    }
+                    if($section->id == $question->section_id){
+                        $sectionTotal += $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
+                    }
+                }
+                $porcentajeSection = ($sectionTotal * $section->value) / $section->total_points;
+                $totalPorcentajeProvider += $porcentajeSection;
+            }
+            $provider->qualification = $totalPorcentajeProvider;
+            $provider->statusInformation = 'Calificado';
+            $provider->save();
+            DB::commit();
+            return redirect(route('viewIndexInformationProvider', $providerId))->with('success', 'Calificación guardada correctamente'); 
+        }
+            catch (\Exception $e) {
+            DB::rollback();
+            return Response::json(['status' => 'error', 'messageDev' => $e->getMessage()]);
+        }
+ 
+
     }
 
 }

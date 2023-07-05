@@ -2,20 +2,23 @@
 {!! Form::hidden('question_id', $question->id,['id'=>'question_id']) !!}
 {!! Form::hidden('section_id', $section->id,['sectionId'=>'section_id']) !!}
 {!! Form::hidden('section', $section,['section'=>'section']) !!}
+
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            {!! Form::label('question','* Pregunta:', array('class' => 'control-label col-md-6')) !!}
+    
+            {!! Form::label('question','* Pregunta ' . $numQuestion . ':', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
                 {!! Form::text('question', $question->question, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. ¿Deseas realizar una pregunta?', 'maxlength' => '256')) !!}
+                'off', 'placeholder' => 'ej. ¿Deseas realizar una pregunta?', 'maxlength' => '256', 'required')) !!}
+                <input type="hidden" name = "order" value="{{$numQuestion}}">
             </div>
         </div>
     
         <div class="form-group">
         {!! Form::label('type_question','* Tipo de pregunta:', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
-            {!! Form::select('type_question', array( 'ABIERTA' => 'Abierta', 'MULTIPLE' => 'Opcion multiple'),$question->type_question,array('class' => 'form-control', 'placeholder' => '- Seleccione -', 'onchange' => "loadTypeQuestion()") ) !!}
+            {!! Form::select('type_question', array( 'ABIERTA' => 'Abierta', 'MULTIPLE' => 'Opcion multiple'),$question->type_question,array('class' => 'form-control', 'placeholder' => '- Seleccione -', 'onchange' => "loadTypeQuestion()", 'required') ) !!}
             </div>
         </div>
 
@@ -41,6 +44,12 @@
             {!! Form::select('status', array( 'ACTIVE' => 'Activo', 'INACTIVE' => 'Inactivo'),$question->status,array('class' => 'form-control') ) !!}
             </div>
         </div>
+        <div class="form-group">
+            {!! Form::label('document','* Requiere documento:', array('class' => 'control-label col-md-3')) !!}
+                <div class="col-md-12">
+                {!! Form::select('document', array( 'SI' => 'SI', 'NO' => 'NO'),$question->document,array('class' => 'form-control', 'required', 'placeholder' => 'Seleccione...') ) !!}
+                </div>
+            </div>
     </div>
 </div>
 

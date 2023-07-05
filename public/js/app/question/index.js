@@ -23,6 +23,10 @@ $(function () {
             },
             columns: [
                 {
+                    data: 'order',
+                    title: 'Nro',
+                },
+                {
                     data: 'question',
                     title: 'Pregunta',
                 },

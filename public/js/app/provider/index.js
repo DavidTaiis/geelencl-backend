@@ -24,17 +24,10 @@ $(function () {
             columns: [
                 
                 {
-                    data: "comercial_name",
-                    title: 'Nombre Comercial'
-                },
-                {
                     data: "legal_name",
                     title: 'Nombre del proveedor'
                 },
-                {
-                    data: "direction",
-                    title: 'Dirección'
-                },
+    
                 {
                     data: "statusInformation",
                     title: 'Estado'

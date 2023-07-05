@@ -126,6 +126,8 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         Route::get('/', 'CompanyProvidersController@index')->name('viewIndexCompanyProviders');
         Route::get('/list', 'CompanyProvidersController@getList')->name('getListDataCompanyProviders');
         Route::get('/{id?}', 'CompanyProvidersController@indexInformation')->name('viewIndexInformationProvider');
+        Route::post('/saveQualification', 'CompanyProvidersController@qualification')->name('qualificationProvider');
+
     });
 
     Route::group(['prefix' => 'profileCompany'], function () {

@@ -30,17 +30,6 @@ $(function () {
                     title: 'Email',
                 },
                 {
-                    data: null,
-                    title: 'Emprendedor',
-                    orderable: false,
-                    render: function (data, type, row, meta) {
-                        if (row.hasOwnProperty('provider') && row.provider) {
-                            return row.provider.name;
-                        }
-                        return '';
-                    },
-                },
-                {
                     data: 'status',
                     title: 'Estado',
                     render: function (data, type, row, meta) {
