@@ -24,7 +24,14 @@
                 {!! Form::select('status', ['ACTIVE' => 'ACTIVO', 'INACTIVE' => 'INACTIVO'], $provider->status,array('class' => 'form-control', 'autocomplete' =>
                 'off', 'placeholder' => 'Seleccione')); !!}
             </div>
-        </div>   
+        </div>
+        <div class="form-group">
+            {!! Form::label('statusInformation','* Estado del formulario:', array('class' => 'control-label col-md-12')) !!}
+            <div class="col-md-12">
+                {!! Form::select('statusInformation', ['Creado' => 'Creado', 'Guardado' => 'Guardado', 'Calificado' => 'Calificado'], $provider->statusInformation,array('class' => 'form-control', 'autocomplete' =>
+                'off')); !!}
+            </div>
+        </div>    
         
     </div>  
     <div class="col-md-6">
@@ -53,7 +60,7 @@
         {!! Form::label('company_id','* Empresa:', array('class' => 'control-label col-md-12')) !!}
         <div class="col-md-12">
             {!! Form::select('company_id', $companies, $provider->empresas_id,array('class' => 'form-control', 'autocomplete' =>
-            'off', 'placeholder' => 'Seleccione')); !!}
+            'off', 'placeholder' => 'Seleccione', 'required')); !!}
         </div>
     </div>
        

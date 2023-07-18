@@ -26,7 +26,11 @@ $(function () {
                     title: 'Nombre',
                     orderable: true
                 },
-       
+                {
+                    data: 'empresa.legal_name',
+                    title: 'Empresa',
+                    orderable: true
+                },
                 {
                     data: 'status',
                     title: 'Estado',

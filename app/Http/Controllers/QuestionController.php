@@ -87,10 +87,10 @@ class QuestionController extends MyBaseController
             ->pluck('respuestas_id')
             ->toArray() : [];
 
-        $providers = SectionTypeProvider::where('secciones_id', $section->id)
-        ->join('tipo_proveedor', 'secciones_tipo_proveedor.tipo_proveedor_id', 'tipo_proveedor.id')
+        $providers = SectionTypeProvider::join('tipo_proveedor', 'secciones_tipo_proveedor.tipo_proveedor_id', 'tipo_proveedor.id')
         ->select('tipo_proveedor.id as idProvider', 'tipo_proveedor.name')
         ->pluck('name', 'idProvider')->toArray();
+
         $providersSelected = $question->id ? QuestionTypeProvider::query()
             ->where('preguntas_id', $question->id)
             ->get()
@@ -186,5 +186,14 @@ class QuestionController extends MyBaseController
     {
         $validation = Validator::make(Request::all(), ['name' => 'unique:respuestas,question,' . Request::get('id') . ',id']);
         return Response::json($validation->passes() ? true : false);
+    }
+    public function deletedQuestion($id)
+    {
+        QuestionAnswers::where('preguntas_id', $id)->delete();
+        QuestionTypeProvider::where('preguntas_id', $id)->delete();
+        Question::query()->find($id)->delete();
+
+        return Response::json(true);
+
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Multimedia\ImageController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\TypeProvider;
+use App\Models\Company;
 use App\Models\SectionTypeProvider;
 
 
@@ -48,7 +49,8 @@ class SectionController extends MyBaseController
             $query->limit((int)$data['length']);
         }
 
-        $sections = $query->get()->toArray();
+        $sections = $query->with('empresa')->orderBy('empresas_id')->get()->toArray();
+
         return Response::json(
             array(
                 'draw' => $data['draw'],
@@ -64,6 +66,7 @@ class SectionController extends MyBaseController
         $method = 'POST';
         $section = isset($id) ? Section::find($id) : new Section();
         $typeProviders = TypeProvider::all()->pluck('name', 'id')->toArray();
+        $companies = Company::all()->pluck('comercial_name', 'id')->toArray();
         $typeProvidersSelected = $section->id ? SectionTypeProvider::query()
             ->where('secciones_id', $section->id)
             ->get()
@@ -73,7 +76,8 @@ class SectionController extends MyBaseController
             'method' => $method,
             'section' => $section,
             'typeProviders' => $typeProviders,
-            'typeProvidersSelected' => $typeProvidersSelected
+            'typeProvidersSelected' => $typeProvidersSelected,
+            'companies' => $companies
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -98,6 +102,8 @@ class SectionController extends MyBaseController
             $section->value = trim($data['value']);
             $section->status = trim($data['status']);
             $section->total_points = trim($data['totalPoints']);
+            $section->empresas_id = trim($data['company_id']);
+
             
             $section->save();
             SectionTypeProvider::query()->where('secciones_id', $section->id)->delete();

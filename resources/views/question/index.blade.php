@@ -47,6 +47,7 @@
     <input id="action_get_form" type="hidden" value="{{ route("getFormQuestion", $section->id) }}"/>
     <input id="action_save" type="hidden" value="{{ route("saveQuestion")}}"/>
     <input id="action_list" type="hidden" value="{{ route("getListDataQuestion", $section->id) }}"/>
+    <input id="action_deleted_question" type="hidden" value="{{ route("deletedQuestion") }}"/>
 @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/question/index.js")}}"></script>

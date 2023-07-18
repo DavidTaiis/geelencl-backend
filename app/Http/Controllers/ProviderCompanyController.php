@@ -96,7 +96,7 @@ class ProviderCompanyController extends MyBaseController
                     foreach ($question->answers as $answer) {
                         if($question->type_question == 'ABIERTA'){
                             if(isset($data["answerQuestion"."-".$question->id."-".$answer->id]) && $data["answerQuestion"."-".$question->id."-".$answer->id] != null){
-                                $questionProviderSaved = QuestionProvider::query()
+                              $questionProviderSaved = QuestionProvider::query()
                                 ->where("proveedor_id", $provider->id)
                                 ->where("preguntas_id", $question->id)
                                 ->where("respuestas_id", $answer->id)
@@ -104,11 +104,11 @@ class ProviderCompanyController extends MyBaseController
                                 $questionProvider = $questionProviderSaved ?? new QuestionProvider();
                                 $questionProvider->preguntas_id = $question->id;
                                 $questionProvider->proveedor_id = $provider->id;
-                                $questionProvider->empresas_id = $provider->empresa_id;
+                                $questionProvider->empresas_id = $provider->empresas_id;
                                 $questionProvider->respuestas_id = $answer->id;
                                 $questionProvider->section_id = $section->id;
-                                $answerSave = Answers::find($data["answerQuestion"."-".$question->id])->first();
-                                $questionProvider->value = $answerSave->answer;
+                                $answerSave = Answers::find(3)->first();
+                                $questionProvider->value = $data["answerQuestion"."-".$question->id."-".$answer->id];
                             }
                         }
                         if($question->type_question == 'MULTIPLE'){ 
@@ -130,6 +130,12 @@ class ProviderCompanyController extends MyBaseController
                         }
                         
                     }
+             
+                    if(isset($data['existFile-'.$question->id]) && $data['existFile-'.$question->id] != null){
+                        $questionProvider->directory = $data['existFile-'.$question->id];
+
+                    }
+                    
                     if(isset($data['fileQuestion-'.$question->id]) && $data['fileQuestion-'.$question->id] != null){
                             if(isset($questionProvider) && $questionProvider != null){
                                 $file = $data['fileQuestion-'.$question->id];
@@ -141,9 +147,11 @@ class ProviderCompanyController extends MyBaseController
                                     if(public_path("{$questionProvider->directory}") != $path ){
                                         File::delete(public_path("{$questionProvider->directory}"));
                                     } 
-                                }
+                                } 
+
                                 $file->move(public_path("Documentos_Verificacion/{$provider->id}/{$nameQuestion}"), $fileName);
                                 $questionProvider->directory = trim($path);
+                               
                             }
                             
                     }
@@ -156,34 +164,9 @@ class ProviderCompanyController extends MyBaseController
                 }
             }
             DB::commit();
-            if($data['action'] == 'Guardar'){
+            
                 return redirect(route('viewIndexProviderCompany'))->with('success', 'Formulario guardado correctamente');
-            }else{
-
-                $resultados = QuestionProvider::where('proveedor_id', $provider->id)->groupBy('section_id')->get();
-                $calificacionFinal = 0;
-                foreach ($resultados as $res){
-                   $valorSection = Section::find($res->section_id);                   
-                    $totalRespuestas = QuestionProvider::query()
-                    ->where('proveedor_id', $provider->id)
-                    ->where('empresas_id', $provider->empresas_id)
-                    ->where('section_id', $res->section_id)->get();
-                    $valorPregunta = $valorSection->value / count($totalRespuestas);
-                    $countTotal = 0;
-                    foreach($totalRespuestas as $item){
-                        if($item->value == 'Si'){
-                            $countTotal += $valorPregunta;
-                        }
-                    }
-                    $calificacionFinal += $countTotal;
-                }
-                /* $provider->qualification = $calificacionFinal; */
-                $provider->save();
-
-                return Response::json(['status' => 'success']);
-                
-            }
-             
+                        
 
         } catch (\Exception $e) {
             DB::rollback();

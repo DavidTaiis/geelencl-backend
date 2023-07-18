@@ -52,7 +52,7 @@ $(function () {
                     render: function (data, type, row, meta) {
                        
                         return '<button class="btn btn-dark btn-sm" onclick="editQuestion(' +
-                            row.id + ')">Editar</button>';
+                            row.id + ')">Editar</button> <button class="btn btn-danger btn-sm" onclick="deletedQuestion(' + row.id + ')">Eliminar</button>';
                     },
                 },
             ],
@@ -160,4 +160,34 @@ function initDropZones() {
         var config = $(this).data();
         initDropZone($(this), config);
     });
+}
+
+function deletedQuestion(id) {
+
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Confirmación para eliminar pregunta",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+
+    }).then(function (result) {
+        if (result.value) {
+            ajaxRequest($('#action_deleted_question').val() + '/' + id, {
+                type: 'DELETE',
+                success_callback: function (data) {
+                    dataTable.ajax.reload();
+                },
+            });
+            Swal.fire({
+                icon: "success",
+                title: "Eliminado correctamente",
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        }
+    });
+
 }

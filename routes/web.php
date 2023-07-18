@@ -105,6 +105,8 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         Route::get('/list/{id?}', 'QuestionController@getList')->name('getListDataQuestion');
         Route::post('/save', 'QuestionController@postSave')->name('saveQuestion');
         Route::post('/save/uploads', 'QuestionController@postSaveUpload')->name('uploadQuestion');
+        Route::delete('deleted/{id?}', 'QuestionController@deletedQuestion')->name('deletedQuestion');
+
     });
     
     Route::group(['prefix' => 'documents'], function () {

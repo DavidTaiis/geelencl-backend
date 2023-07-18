@@ -70,7 +70,8 @@
                         
                         <div class="form-group col-md-10">
                             
-                            <h5> {{$question->order}} .- {{$question->question}}</h5>
+                            <h5><pre style="font-family: Poppins"> {{$question->order}} .- {{$question->question}}</pre></h5>
+
                             <br>
                             @php
                             $count = 1;
@@ -135,9 +136,15 @@
                                         <p>Medio de verificación guardado para visualizar presiona aquí <a href="{{$saved->directory }}" target="_blank">Ver documento</a></p>
                                          <br>
                                          <p>Si deseas reemplazar el archivo, carga nuevamente tu medio de verificación 🡳</p>
+                                        <input type="hidden" name="existFile-{{$question->id}}" value="{{$saved->directory}}">
+
                                         @endif
+
+
                                     @endforeach
+
                             @if ($question->document == 'SI')
+
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="customFileLang" lang="es" name="fileQuestion-{{$question->id}}"  >
                                 <label class="custom-file-label" for="customFileLang">Seleccionar archivo de verificación</label>

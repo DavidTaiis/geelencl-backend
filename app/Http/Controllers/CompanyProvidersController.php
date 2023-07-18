@@ -72,18 +72,20 @@ class CompanyProvidersController extends MyBaseController
         //dd($questionSaved);
         //Todo agregar empresas
         $provider = Provider::where('id', $id)->first();
-
         if(!$provider){
             $provider = new Provider();
         }
         
         $providerId = $provider->id;
+        $typeProvider = $provider->tipo_proveedor_id;
         $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
-         $sectionsTypeProvider->where(function ($subQuery) use ($providerId) {
-            $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($providerId) {
-                    $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $providerId);
+         $sectionsTypeProvider->where(function ($subQuery) use ($typeProvider) {
+            $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($typeProvider) {
+                    $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $typeProvider);
                 });
         }); 
+       /*  dd($sectionsTypeProvider->get()); */
+
         
         $sections = $sectionsTypeProvider->get();
         $this->layout->content = View::make('providersInformation.index', [
@@ -100,9 +102,18 @@ class CompanyProvidersController extends MyBaseController
             $data = Request::all();
             $providerId = $data['providerId'];
             $provider = Provider::find($providerId);
+            $typeProvider = $provider->tipo_proveedor_id;
             $questionSaved = QuestionProvider::query()->where("proveedor_id", $providerId)->get();
             $idSecctionProvider = QuestionProvider::query()->where("proveedor_id", $providerId)->groupBy('section_id')->pluck('section_id');
-            $sections = Section::whereIn('id', $idSecctionProvider)->get();
+            $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
+            $sectionsTypeProvider->where(function ($subQuery) use ($typeProvider) {
+               $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($typeProvider) {
+                       $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $typeProvider);
+                   });
+           }); 
+          /*  dd($sectionsTypeProvider->get()); */
+          $sections = $sectionsTypeProvider->get();
+           $sections = $sectionsTypeProvider->get();
             $totalPorcentajeProvider = 0;
             foreach ($sections as $section) {
             $porcentajeSection = 0;
@@ -116,7 +127,10 @@ class CompanyProvidersController extends MyBaseController
                         $sectionTotal += $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
                     }
                 }
-                $porcentajeSection = ($sectionTotal * $section->value) / $section->total_points;
+                if($section->total_points > 0){
+                    $porcentajeSection = ($sectionTotal * $section->value) / $section->total_points;
+
+                }
                 $totalPorcentajeProvider += $porcentajeSection;
             }
             $provider->qualification = $totalPorcentajeProvider;

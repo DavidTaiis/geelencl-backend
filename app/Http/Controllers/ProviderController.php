@@ -133,7 +133,10 @@ class ProviderController extends MyBaseController
             $provider->email = trim($data['administrador_email']);
             $provider->status = trim($data['status']);
             $provider->empresas_id = trim($data['company_id']);
-            $provider->statusInformation = 'Creado';
+            $provider->statusInformation = trim($data['statusInformation']);
+            if($provider->statusInformation == "Guardado"){
+                $provider->qualification = 0;
+            }
             $provider->save();
             
             //Imágenes

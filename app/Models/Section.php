@@ -45,7 +45,9 @@ class Section extends Model
         'name',
         'status',
         'value',
-        'total_points'
+        'total_points',
+        'empresas_id'
+
     ];
 
     /**
@@ -58,7 +60,9 @@ class Section extends Model
         'name' => 'string',
         'status' => 'string',
         'value' => 'integer',
-        'total_points' => 'string'
+        'total_points' => 'string',
+        'empresas_id'=>'integer'
+
     ];
 
     /**
@@ -80,5 +84,9 @@ class Section extends Model
     {
         return $this->belongsToMany(TypeProvider::class, 'secciones_tipo_proveedor',
             'secciones_id', 'tipo_proveedor_id');
+    }
+    public function empresa()
+    {
+        return $this->belongsTo(Company::class, 'empresas_id');
     }
 }

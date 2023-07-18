@@ -38,6 +38,13 @@
                 'off', 'placeholder' => 'ej. 60', 'maxlength' => '64')) !!}
             </div>
         </div>
+        <div class="form-group">
+            {!! Form::label('company_id','* Empresa:', array('class' => 'control-label col-md-12')) !!}
+            <div class="col-md-12">
+                {!! Form::select('company_id', $companies, $section->empresas_id,array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => 'Seleccione', 'required')); !!}
+            </div>
+        </div>
     </div>
 </div>
 

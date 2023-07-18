@@ -9,8 +9,8 @@
     
             {!! Form::label('question','* Pregunta ' . $numQuestion . ':', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
-                {!! Form::text('question', $question->question, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. ¿Deseas realizar una pregunta?', 'maxlength' => '256', 'required')) !!}
+                {!! Form::textarea('question', $question->question, array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => 'ej. ¿Deseas realizar una pregunta?', 'required')) !!}
                 <input type="hidden" name = "order" value="{{$numQuestion}}">
             </div>
         </div>

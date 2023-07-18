@@ -12,11 +12,15 @@
             <span class="badge badge-primary py-4 px-4">{{$provider->statusInformation}}</span>
             {{-- <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button> --}}
             @endif
+            @if ($provider->statusInformation == 'Enviado')
+            <span class="badge badge-primary py-4 px-4">{{$provider->statusInformation}}</span>
+            {{-- <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button> --}}
+            @endif
             @if ($provider->statusInformation == 'Calificado')
             <span class="badge badge-danger py-4 px-4">{{$provider->statusInformation}} &nbsp; {{$provider->qualification}}</span>
             {{-- <button type="button" class="btn btn-info p-4">{{$provider->statusInformation}}</button> --}}
             @endif
-            @if ($provider->statusInformation == null)
+            @if ($provider->statusInformation == 'Creado')
             <span class="badge badge-info py-4 px-4">Creado</span>
            {{--  <button type="button" class="btn btn-info p-4">Creado</button> --}}
     
@@ -43,8 +47,19 @@
                         @foreach ($section->questions as $question )
                         
                         <div class="form-group col-md-10">
-                            
-                          <h5> {{$question->order}} .- {{$question->question}}</h5>
+                        @php
+                        $isContainer = false;
+                          if (strpos($question->question, ':') !== false) {
+                                    $isContainer = true;
+                                }
+                        @endphp
+                        @if ($isContainer)
+                        <h5><pre style="font-family: Poppins"> {{$question->order}} .- {{$question->question}}</pre></h5>
+
+                        @endif
+                        @if (!$isContainer)
+                        <h5> {{$question->order}} .- {{$question->question}}</h5>
+                        @endif
                           <br>
                             @php
                             $count = 1;
@@ -137,9 +152,13 @@
             @endforeach
             
             <input type="hidden" name = "providerId" value="{{$provider->id}}">
+            
+            @if ($provider->statusInformation == "Enviado")
             <div style="text-align: right">
                 <button class="btn mr-4 mt-2 px-8" style="background: green; color:white" type="submit" onclick="
                 return confirm('¿Estás seguro que deseas calificar a este proveedor {{$provider->comercial_name}}?')"> Calificar </button></div>
+            @endif
+            
           
 
             </form>

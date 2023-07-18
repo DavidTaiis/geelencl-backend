@@ -169,6 +169,9 @@ function validateformprovider() {
             },
             status :{
                 required: true 
+            },
+            company_id:{
+                required:true
             }
         },
         messages: {
