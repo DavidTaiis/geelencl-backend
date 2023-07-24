@@ -147,4 +147,9 @@ class CompanyProvidersController extends MyBaseController
 
     }
 
+    public function generatePdf(){
+    $pdf = \PDF::loadView('companyProviders.reporte');
+    return $pdf->download('archivo.pdf');
+    }
+
 }

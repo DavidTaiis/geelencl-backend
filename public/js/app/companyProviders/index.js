@@ -47,7 +47,7 @@ $(function () {
                     orderable: false,
                     render: function (data, type, row, meta) {
                        
-                        return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a>';
+                        return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a>';
                     },
                 },
             ],
