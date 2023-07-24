@@ -31,7 +31,9 @@
     <input id="action_unique_name" type="hidden" value="{{ route("uniqueNameCompany") }}"/>
     <input id="action_save_company" type="hidden" value="{{ route("saveCompany") }}"/>
     <input id="action_load_company" type="hidden" value="{{ route("getListDataCompany") }}"/>
-@endsection
+    <input id="action_index_sections" type="hidden" value="{{ route("viewIndexSection") }}"/> 
+
+    @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/company/index.js")}}"></script>
 @endsection

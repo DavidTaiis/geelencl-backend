@@ -59,8 +59,8 @@ class Section extends Model
         'id' => 'integer',
         'name' => 'string',
         'status' => 'string',
-        'value' => 'integer',
-        'total_points' => 'string',
+        'value' => 'float',
+        'total_points' => 'float',
         'empresas_id'=>'integer'
 
     ];
@@ -77,7 +77,7 @@ class Section extends Model
 
     public function questions()
     {
-        return $this->hasMany(Question::class, 'secciones_id');
+        return $this->hasMany(Question::class, 'secciones_id')->where('status', 'ACTIVE');
     }
 
     public function sectionsTypeProvider()

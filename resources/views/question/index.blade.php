@@ -1,6 +1,6 @@
 @section('content')
 @if ($section)
-<div class="bg-white " style="margin-top: 0px ; text-align: center; width:100% ; align-self: center;">
+<div class="bg-white " style="margin-top: 0px ; text-align: center; width:100% ; align-self: center; padding-bottom: 15px;">
     
       <br> 
       <div class="d-flex flex-column mb-10 mb-md-0">
@@ -14,8 +14,11 @@
       <label>Inactivo </label></span>
       @endif
       </div> 
+      <div  style="text-align: left; margin: 10px;">
+        <a href="{{route('viewIndexSection', $section->id)}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-secondary btn-left"><i class="fas fa-angle-double-left"></i> Atrás</span></a> </div>    
     </div> 
     @endif
+    
 
     @include('partials.admin_view',[
     'title'=>'Administración de preguntas',
@@ -48,6 +51,7 @@
     <input id="action_save" type="hidden" value="{{ route("saveQuestion")}}"/>
     <input id="action_list" type="hidden" value="{{ route("getListDataQuestion", $section->id) }}"/>
     <input id="action_deleted_question" type="hidden" value="{{ route("deletedQuestion") }}"/>
+
 @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/question/index.js")}}"></script>

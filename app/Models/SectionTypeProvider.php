@@ -54,7 +54,7 @@ class SectionTypeProvider extends Model
     protected $casts = [
         'id' => 'integer',
         'secciones_id' => 'integer',
-        'tipo_proveedor_id' => 'tipo_proveedor_id'
+        'tipo_proveedor_id' => 'integer'
     ];
 
     /**

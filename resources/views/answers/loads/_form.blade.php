@@ -11,9 +11,10 @@
         </div>
     
         <div class="form-group">
-        {!! Form::label('status','* Estado:', array('class' => 'control-label col-md-3')) !!}
+        {!! Form::label('status','* Puntaje:', array('class' => 'control-label col-md-3')) !!}
         <div class="col-md-12">
-            {!! Form::select('status', array( 'ACTIVE' => 'Activo', 'INACTIVE' => 'Inactivo'),$answers->status,array('class' => 'form-control') ) !!}
+        {!! Form::number('puntaje', $answers->puntaje, array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => '5', 'maxlength' => '3', 'step' => "1", 'min'=>'1')) !!}
         </div>
         </div>
 </div>

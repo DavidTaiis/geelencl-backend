@@ -37,7 +37,7 @@ class QuestionController extends MyBaseController
     {
         $data = Request::all();
         $section = Section::find($id);
-        $query = Question::query()->where('secciones_id', $id);
+        $query = Question::query()->where('secciones_id', $id)->where('status', 'ACTIVE');
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
@@ -68,8 +68,6 @@ class QuestionController extends MyBaseController
     {
         $method = 'POST';
         $countQustion = 0;
-
-      
 
         $section = Section::find($sectionId);
         $question = isset($id) ? Question::find($id) : new Question();
@@ -189,9 +187,9 @@ class QuestionController extends MyBaseController
     }
     public function deletedQuestion($id)
     {
-        QuestionAnswers::where('preguntas_id', $id)->delete();
-        QuestionTypeProvider::where('preguntas_id', $id)->delete();
-        Question::query()->find($id)->delete();
+        $question = Question::find($id);
+        $question->status = 'INACTIVE';
+        $question->save();
 
         return Response::json(true);
 

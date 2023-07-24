@@ -30,7 +30,7 @@
     <hr>
     <h4 class="ml-8">Califica de acuerdo a las respuestas ingresadas</h4>
     <div id="accordion">
-        <form method="POST" action = "{{ route('qualificationProvider') }}">
+        <form method="POST" action = "{{ route('qualificationProvider') }}" id="calification_form">
             @csrf
             @foreach ($sections as $section )
             <div class="card">
@@ -68,6 +68,8 @@
                             @foreach ($question->answers as $answer )
                            
                                 @if ($question->type_question == 'MULTIPLE')
+                              
+
                                     @php
                                     $answerSaved = false;
                                     @endphp
@@ -75,6 +77,8 @@
                                         @if ($saved->preguntas_id == $question->id && $saved->respuestas_id == $answer->id )
                                         @php
                                         $answerSaved = true; 
+                                        $puntaje = $answer->puntaje;
+                                        $abierta = false;
                                         @endphp
                                         <div class="custom-control custom-radio custom-control-inline">
                                             <input type="radio" id="customRadioInline{{$count.$question->id}}" name="answerQuestion-{{$question->id}}" value="{{$answer->id}}" checked = {{$saved->value}} class="custom-control-input" disabled>
@@ -84,7 +88,7 @@
                                     @endforeach
                                     @if (!$answerSaved)
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline{{$count.$question->id}}" name="answerQuestion-{{$question->id}}" value="{{$answer->id}}"   class="custom-control-input" disabled>
+                                        <input type="radio" id="customRadioInline{{$count.$question->id}}" name="answerQuestion-{{$question->id}}" value="{{$answer->id}}"   class="custom-control-input" >
                                         <label class="custom-control-label" for="customRadioInline{{$count.$question->id}}">{{$answer->answer}}</label>
                                     </div>
                                     @endif
@@ -96,12 +100,21 @@
                                 @if ($question->type_question == 'ABIERTA')
                                     @php
                                         $answerSaved = false;
+                                       
                                     @endphp
                                     @foreach ($questionSaved as $saved)
+                                    
                                         @if ($saved->preguntas_id == $question->id && $saved->respuestas_id == $answer->id )
                                         @php
                                         $answerSaved = true; 
+                                        $abierta = true;
+                                        $puntaje = $answer->puntaje;
                                         @endphp
+                                        @if($saved->qualification != null)
+                                        @php
+                                        $puntaje = $saved->qualification;
+                                        @endphp
+                                        @endif
                                         <textarea rows="4" class="col-md-12" placeholder="Ingrese su respuesta" name="answerQuestion-{{$question->id}}-{{$answer->id}}" readonly>{{$saved->value}}</textarea>
                                         @endif
                                     @endforeach
@@ -130,11 +143,16 @@
                                     @if (!$answerSaved)
                                     <p>Ningún documento ha sido subido aún.</p>
                                     @endif 
-                                    @if ($provider->statusInformation != 'Calificado')
+                                    @if ($provider->statusInformation != 'Evaluado')
                                     <div class="form-group row">
-                                        <label for="staticEmail" class="col-sm-2 col-form-label">Calificación: </label>
+                                        <label for="staticEmail" class="col-sm-2 col-form-label">Calificación:</label>
                                         <div class="col-md-6">
-                                          <input type="number" class="form-control" name="qualification-{{$section->id}}-{{$question->id}}" id="staticEmail">
+                                            @if ($abierta == true)
+                                          <input type="number" class="form-control" name="qualification-{{$section->id}}-{{$question->id}}" id="staticEmail" value={{$puntaje}}>
+                                            @else
+                                          <input type="number" class="form-control" name="qualification-{{$section->id}}-{{$question->id}}" id="staticEmail" value={{$puntaje}} readonly>
+
+                                            @endif
                                         </div>
                                       </div>      
                                     @endif  
@@ -152,18 +170,21 @@
             @endforeach
             
             <input type="hidden" name = "providerId" value="{{$provider->id}}">
-            
-            @if ($provider->statusInformation == "Enviado")
+            </form>
+            @if ($provider->statusInformation != "Guardado" || $provider->statusInformation != "Creado" )
             <div style="text-align: right">
-                <button class="btn mr-4 mt-2 px-8" style="background: green; color:white" type="submit" onclick="
-                return confirm('¿Estás seguro que deseas calificar a este proveedor {{$provider->comercial_name}}?')"> Calificar </button></div>
+                <button class="btn mr-4 mt-2 px-8" style="background: green; color:white" type="submit" onclick="guardarDatos()"> Calificar </button></div>
             @endif
             
           
 
-            </form>
+            
         
 </div>
 <input id="action_save" type="hidden" value="{{ route("qualificationProvider") }}"/>
 
+@endsection
+
+@section('additional-scripts')
+    <script src="{{asset("js/app/providersCompany/index.js")}}"></script>
 @endsection

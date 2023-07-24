@@ -23,17 +23,20 @@ class SectionController extends MyBaseController
     /**
      *
      */
-    public function index()
+    public function index($id = null)
     {
+        $company = Company::find($id);
         $this->layout->content = View::make('section.index', [
+            "company" => $company
         ]);
     }
 
-    public function getList()
+    public function getList($id = null)
     {
         $data = Request::all();
 
         $query = Section::query();  
+        $query->where('empresas_id', $id);
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
@@ -61,12 +64,13 @@ class SectionController extends MyBaseController
         );
     }
 
-    public function getForm($id = null)
+    public function getForm($companyId = null,$id = null)
     {
+        //dd($id, $companyId);
         $method = 'POST';
         $section = isset($id) ? Section::find($id) : new Section();
         $typeProviders = TypeProvider::all()->pluck('name', 'id')->toArray();
-        $companies = Company::all()->pluck('comercial_name', 'id')->toArray();
+        $companies = Company::all()->where('id', $companyId)->pluck('comercial_name', 'id')->toArray();
         $typeProvidersSelected = $section->id ? SectionTypeProvider::query()
             ->where('secciones_id', $section->id)
             ->get()

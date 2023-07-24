@@ -27,15 +27,15 @@
         <div class="form-group">
             {!! Form::label('name','* Porcentaje calificación:', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
-                {!! Form::text('value', $section->value, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. 20', 'maxlength' => '64')) !!}
+                {!! Form::number('value', $section->value, array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => 'ej. 20', 'maxlength' => '64', 'min'=>'1')) !!}
             </div>
         </div>
         <div class="form-group">
             {!! Form::label('name','* Total de puntos:', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
-                {!! Form::text('totalPoints', $section->total_points, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. 60', 'maxlength' => '64')) !!}
+                {!! Form::number('totalPoints', $section->total_points, array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => 'ej. 60', 'maxlength' => '64' ,'min'=>'1')) !!}
             </div>
         </div>
         <div class="form-group">

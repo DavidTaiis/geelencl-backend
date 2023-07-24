@@ -25,8 +25,11 @@ $(function () {
                     data: 'answer',
                     title: 'Respuesta',
                 },
-       
                 {
+                    data:'puntaje',
+                    title:'Puntaje'
+                },
+                /* {
                     data: 'status',
                     title: 'Estado',
                     render: function (data, type, row, meta) {
@@ -36,7 +39,7 @@ $(function () {
                             return '<span class="label label-danger label-pill label-inline">Inactivo</span>';
                         }
                     },
-                },
+                }, */
                 {
                     data: null,
                     title: 'Acciones',
@@ -107,7 +110,7 @@ function validateForm() {
             
         },
         messages: {
-            
+            puntaje: "Ingrese un valor entero, no se aceptan decimales."
         },
         errorElement: 'small',
         errorClass: 'help-block',

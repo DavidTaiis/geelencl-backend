@@ -80,12 +80,11 @@ class AnswersController extends MyBaseController
                 $answers->status = 'ACTIVE';
             } else { //Update
                 $answers = Answers::query()->find($data['answers_id']);
-                if (isset($data['status'])) {
-                    $answers->status = $data['status'];
-                }
             }
             $answers->answer = trim($data['answer']);
-            $answers->status = trim($data['status']);
+            $answers->status = 'ACTIVE';
+            $answers->puntaje = trim($data['puntaje']);
+
             
             $answers->save();
 

@@ -164,7 +164,6 @@ class ProviderCompanyController extends MyBaseController
                 }
             }
             DB::commit();
-            
                 return redirect(route('viewIndexProviderCompany'))->with('success', 'Formulario guardado correctamente');
                         
 

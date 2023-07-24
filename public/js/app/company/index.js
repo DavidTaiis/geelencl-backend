@@ -50,9 +50,9 @@ $(function () {
                     data: null,
                     title: 'Acciones',
                     orderable: false,
-                    width: "140px",
+                    width: "180px",
                     render: function (data, type, row, meta) {
-                        return '<button class="btn btn-dark btn-sm" onclick="editCompany(' + row.id + ')">Editar</button>';
+                        return '<button class="btn btn-dark btn-sm" onclick="editCompany(' + row.id + ')">Editar</button>  <a href="'+ $('#action_index_sections').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Añadir Sección</span></a>';
                     }
                     
                 }
