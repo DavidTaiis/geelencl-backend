@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use App\Models\QuestionProvider;
 use App\Models\Company;
+use App\Models\Certificate;
 use App\Models\Section;
 use App\Models\User;
 use Illuminate\Support\Facades\Request;
@@ -147,8 +148,38 @@ class CompanyProvidersController extends MyBaseController
 
     }
 
-    public function generatePdf(){
-    $pdf = \PDF::loadView('companyProviders.reporte');
+    public function generatePdf($id){
+        $questionSaved = QuestionProvider::query()->where("proveedor_id", $id)->get();
+        $datosFirma = Certificate::query()->where('status', "ACTIVE")->first();
+        $provider = Provider::where('id', $id)->first();
+        if(!$provider){
+            $provider = new Provider();
+        }
+        
+        $providerId = $provider->id;
+        $typeProvider = $provider->tipo_proveedor_id;
+        $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
+         $sectionsTypeProvider->where(function ($subQuery) use ($typeProvider) {
+            $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($typeProvider) {
+                    $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $typeProvider);
+                });
+        }); 
+       
+        $sections = $sectionsTypeProvider->get();
+        $fecha_actual = date("d-m-Y");
+        $fecha_anio = date("d-m-Y",strtotime($fecha_actual."+ 1 year"));
+        $urlImage = explode('uploads', $datosFirma->images[0]->url);
+        $url = $urlImage[1];
+        $pdf = \PDF::loadView('companyProviders.reporte',[
+        'sections' => $sections,
+        'questionSaved' => $questionSaved,
+        'provider'   =>    $provider,
+        'datosFirma' =>    $datosFirma,
+        'fecha_actual' => $fecha_actual,
+        'fecha_anio' => $fecha_anio,
+        'url' => $url
+    ]);
+
     return $pdf->download('archivo.pdf');
     }
 

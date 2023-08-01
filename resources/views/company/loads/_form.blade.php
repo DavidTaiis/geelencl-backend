@@ -93,24 +93,6 @@
     </div>    
 </div>
 
-    <div class="row">
-    <div class="col-md-12">
-        @foreach($image_parameters  as $image_parameter)
-            @include('partials._dropzone_partial',[
-                          'title'=>"{$image_parameter['label']} ({$image_parameter['width']}px * {$image_parameter['height']}px) {$image_parameter['extension']}",
-                          'max_width'=>$image_parameter['width'],
-                          'max_height'=>$image_parameter['height'],
-                          'entity_id'=>$image_parameter['id'],
-                          'wrapper_class'=>'wrapper_image',
-                          'accepted_files'=>$image_parameter['extension'],
-                          'auto_process_queue'=>'no',
-                          'images'=>$image_parameter['images'],
-                          'max_size' =>$image_parameter['max_size'],
-                          'handle_js_delete'=>'deleteImage',
-             ])
-        @endforeach
-    </div>
-</div>
 {!! Form::close() !!}
 <script>
     $(document).ready(function(){

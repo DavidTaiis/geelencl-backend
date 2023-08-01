@@ -94,4 +94,8 @@ class Provider extends Model
     {
         return $this->belongsTo(TypeProvider::class, 'tipo_proveedor_id');
     }
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'empresas_id');
+    }
 }

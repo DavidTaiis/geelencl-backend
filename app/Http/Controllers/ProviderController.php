@@ -72,29 +72,10 @@ class ProviderController extends MyBaseController
         $user = $provider->id ? User::find($provider->users_id): new User();
         $typeProvider = TypeProvider::all()->pluck('name', 'id')->toArray();
         $companies = Company::all()->pluck('comercial_name', 'id')->toArray();
-        $image_parameters = ImageParameter::query()
-            ->where('entity', '=', ImageParameter::TYPE_UNIT)
-            ->get()
-            ->toArray();
-
-        foreach ($image_parameters as $idx => $image_parameter) {
-            $images = $provider->images()
-                ->where('image_parameter_id', '=', $image_parameter['id'])
-                ->get();
-            $aux_images = [];
-            foreach ($images as $image) {
-                $aux_images[] = [
-                    'id' => $image->id,
-                    'file_name' => $image->file_name,
-                    'url' => $image->url,
-                ];
-            }
-            $image_parameters[$idx]['images'] = $aux_images;
-        }
+       
         $view = View::make('provider.loads._form', [
             'method' => $method,
             'provider' => $provider,
-            'image_parameters' => $image_parameters,
             'user'=> $user,
             'typeProvider'=> $typeProvider,
             'companies' => $companies
@@ -140,36 +121,6 @@ class ProviderController extends MyBaseController
             }
             $provider->save();
             
-            //Imágenes
-            $imageController = new ImageController();
-            $images = $data['files'] ?? [];
-            $params = $data['filesParams'] ?? [];
-            $folder = $provider->getTable();
-            foreach ($images as $index => $file) {
-                $folderName = "{$folder}/{$provider->id}";
-                $auxParams = json_decode($params[$index], true);
-                $fileName = $imageController->saveFileAwsS3($file, $folderName);
-                $imageModel = new Image();
-                $imageModel->file_name = $fileName;
-                $imageModel->image_parameter_id = $auxParams['imageParameterId'];
-                $provider->images()->save($imageModel);
-                
-            }
-            $deletedMultimediaIds = $data['filesDeleted'] ?? [];
-            $deletedMultimedia = Image::query()
-                ->whereIn('id', $deletedMultimediaIds)
-                ->get();
-            foreach ($deletedMultimedia as $itemMultimedia) {
-                if(config('constants.logicFileSystem') == 's3'){
-                    $path = "{$folder}/{$provider->id}/{$itemMultimedia->file_name}";
-                }else{
-                    $path = "uploads/{$folder}/{$provider->id}/{$itemMultimedia->file_name}";
-                }
-                if (Storage::disk(config('constants.logicFileSystem'))->exists($path)) {
-                    Storage::disk(config('constants.logicFileSystem'))->delete($path);
-                }
-                $itemMultimedia->delete();
-            }
             
 
             return Response::json([
