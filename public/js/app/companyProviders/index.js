@@ -1,5 +1,7 @@
 var dataTable = null;
 const form_parameter = null
+let modalTest = null
+let formTest = null
 $(function () {
     dataTable = initDataTableAjax($('#companyProviders_table'),
         {
@@ -46,13 +48,24 @@ $(function () {
                     title: 'Acciones',
                     orderable: false,
                     render: function (data, type, row, meta) {
+                        if(row.statusInformation == "Finalizado"){
+                            return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a>';
+
+                        }else{
+                            return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a> <button class="btn btn-dark btn-sm" onclick="newTest(' + row.id + ')">Finalizar Evaluación</button>';
+
+                        }
                        
-                        return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a>';
                     },
                 },
             ],
         });
+        modalTest = $('#test_modal');
 });
+function newTest(id) {
+    modalTest.find('.modal-title').html('Finalizar Evaluacion');
+    getformCompany($('#action_form_test').val() + '/' + id);
+}
 
 function saveForm() {
     
@@ -89,4 +102,59 @@ function saveForm() {
         }
     });
 
+}
+
+function getformCompany(url) {
+    ajaxRequest(url, {
+        type: 'GET',
+        error_message: 'Error al cargar formulario',
+        success_callback: function (data) {
+            modalTest.find('.container_modal').html('');
+            modalTest.find('.container_modal').html(data.html);
+            formTest = $("#test_form");
+            validateformTest();
+            modalTest.modal({
+                show: true,
+                backdrop: 'static',
+                keyboard: false // to prevent closing with Esc button (if you want this too)
+            });
+        }
+    });
+}
+function validateformTest() {
+    formTest.validate({
+        rules: {
+        
+        },
+        messages: {
+        
+        },
+        errorElement: 'small',
+        errorClass: 'help-block',
+        highlight: validationHighlight,
+        success: validationSuccess,
+        errorPlacement: validationErrorPlacement,
+        submitHandler: function (form) {
+            saveTest();
+        }
+    });
+}
+function saveTest() {
+    if ($('#test_form').valid()) {
+        var data = $('#test_form').serializeArray();
+        ajaxRequest(
+            $('#action_save_test').val(),
+            {
+                type: 'POST',
+                data: data,
+                blockElement: '#test_modal .modal-content',//opcional: es para bloquear el elemento
+                loading_message: 'Guardando...',
+                error_message: 'Error al guardar el proceso de finalización',
+                success_message: 'Se guardó correctamente',
+                success_callback: function (data) {
+                    $('#test_modal').modal('hide');
+                    dataTable.ajax.reload();
+                }
+            });
+    }
 }
