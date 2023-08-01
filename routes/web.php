@@ -122,6 +122,10 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         Route::get('/', 'ProviderCompanyController@index')->name('viewIndexProviderCompany');
         Route::post('/save', 'ProviderCompanyController@postSave')->name('saveProviderCompany');
     });
+    Route::group(['prefix' => 'testEnd'], function () {
+        Route::get('/form/{id?}', 'TestEndController@getForm')->name('getFormtest');
+        Route::post('/save', 'TestEndController@postSave')->name('saveTest');
+    });
 
 //Rol Empresa
     Route::group(['prefix' => 'companyProviders'], function () {
