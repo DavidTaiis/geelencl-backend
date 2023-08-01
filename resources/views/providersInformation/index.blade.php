@@ -1,5 +1,7 @@
 @section('content')
-
+@php                         
+$abierta = false;
+@endphp
 <div class="card card-custom">
     <div class="card-header flex-wrap py-5">
         <div class="card-title">
