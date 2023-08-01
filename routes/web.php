@@ -117,6 +117,14 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         Route::post('/save/uploads', 'ManualController@postSaveUpload')->name('uploadManual');
     });
 
+    Route::group(['prefix' => 'dataCertificate'], function () {
+        Route::get('/', 'CertificateController@index')->name('viewIndexCertificate');
+        Route::get('/form/{id?}', 'CertificateController@getForm')->name('getFormCertificate');
+        Route::get('/list', 'CertificateController@getList')->name('getListDataCertificate');
+        Route::post('/save', 'CertificateController@postSave')->name('saveCertificate');
+        Route::post('/save/uploads', 'CertificateController@postSaveUpload')->name('uploadCertificate');
+    });
+
 //Rol proveedor
     Route::group(['prefix' => 'providersCompany'], function () {
         Route::get('/', 'ProviderCompanyController@index')->name('viewIndexProviderCompany');

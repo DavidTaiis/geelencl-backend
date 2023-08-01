@@ -134,6 +134,7 @@ class ProviderController extends MyBaseController
             $provider->status = trim($data['status']);
             $provider->empresas_id = trim($data['company_id']);
             $provider->statusInformation = trim($data['statusInformation']);
+            $provider->ruc = trim($data['ruc']);
             if($provider->statusInformation == "Guardado"){
                 $provider->qualification = 0;
             }

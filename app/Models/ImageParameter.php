@@ -19,21 +19,14 @@ class ImageParameter extends Model
     public static $entities = [
         
         'COMPANY' => 'Empresa',
-        'LEVEL' => 'Niveles',
+        
         'USER' => 'Usuarios',
-        'PRODUCT' => 'Productos',
-        'UNIT' => 'Unidades',
-        'CATEGORY' => 'Categoría',
-        'MISSION' => 'Misiones',
-        'OBJECTIVE' => 'Objetivos'
+        
+        'DATOS_CERTIFICADO' => 'Certificado'
     ];
 
     const TYPE_COMPANY = 'COMPANY';
-    const TYPE_LEVEL = 'LEVEL';
     const TYPE_USER = 'USER';
-    const TYPE_PRODUCT = 'PRODUCT';
-    const TYPE_UNIT = 'UNIT';
-    const TYPE_CATEGORY = 'CATEGORY';
-    const TYPE_MISSION = 'MISSION';
-    const TYPE_OBJECTIVE = 'OBJECTIVE';
+    const DATOS_CERTIFICADO = 'DATOS_CERTIFICADO';
+
 }

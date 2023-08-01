@@ -10,6 +10,13 @@
                 'off', 'placeholder' => 'ej. Multinacional', 'maxlength' => '256')) !!}
             </div>
         </div>
+        <div class="form-group">
+            {!! Form::label('ruc','* RUC:', array('class' => 'control-label col-md-12')) !!}
+            <div class="col-md-12">
+                {!! Form::text('ruc', $provider->ruc, array('class' => 'form-control', 'autocomplete' =>
+                'off', 'placeholder' => 'ej. 100000000000001', 'maxlength' => '15', 'required' => 'true')) !!}
+            </div>
+        </div>
         
         <div class="form-group">
             {!! Form::label('tipo_proveedor_id','* Tipo Proveedor:', array('class' => 'control-label col-md-12')) !!}
