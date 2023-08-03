@@ -28,7 +28,7 @@
             {!! Form::label('name','* Porcentaje calificación:', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
                 {!! Form::number('value', $section->value, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. 20', 'maxlength' => '64', 'min'=>'1')) !!}
+                'off', 'placeholder' => 'ej. 20', 'maxlength' => '64', 'min'=>'0')) !!}
             </div>
         </div>
         <div class="form-group">
