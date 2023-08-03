@@ -157,10 +157,7 @@ class ProviderCompanyController extends MyBaseController
                     }
                     if(isset($questionProvider) && $questionProvider != null){
                          $questionProvider->save();
-                    }
-
-                    
-                   
+                    }   
                 }
             }
             DB::commit();

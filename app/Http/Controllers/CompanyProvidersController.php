@@ -112,7 +112,6 @@ class CompanyProvidersController extends MyBaseController
                        $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $typeProvider);
                    });
            }); 
-          /*  dd($sectionsTypeProvider->get()); */
           $sections = $sectionsTypeProvider->get();
            $sections = $sectionsTypeProvider->get();
             $totalPorcentajeProvider = 0;
@@ -120,7 +119,7 @@ class CompanyProvidersController extends MyBaseController
             $porcentajeSection = 0;
             $sectionTotal = 0;
                 foreach ($questionSaved as $question) {
-                    if($data['qualification-'.$question->section_id.'-'.$question->preguntas_id]){
+                    if($data['qualification-'.$question->section_id.'-'.$question->preguntas_id] != null){
                         $question->qualification = $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
                         $question->save();                        
                     }
