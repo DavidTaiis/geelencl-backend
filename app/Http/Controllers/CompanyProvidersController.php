@@ -121,11 +121,13 @@ class CompanyProvidersController extends MyBaseController
                 foreach ($questionSaved as $question) {
                     if(isset($data['qualification-'.$question->section_id.'-'.$question->preguntas_id]) && $data['qualification-'.$question->section_id.'-'.$question->preguntas_id] != null){
                         $question->qualification = $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
-                        $question->save();                        
+                        $question->save(); 
+                        
+                        if($section->id == $question->section_id){
+                            $sectionTotal += $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
+                        }
                     }
-                    if($section->id == $question->section_id){
-                        $sectionTotal += $data['qualification-'.$question->section_id.'-'.$question->preguntas_id];
-                    }
+                    
                 }
                 if($section->total_points > 0){
                     $porcentajeSection = ($sectionTotal * $section->value) / $section->total_points;
