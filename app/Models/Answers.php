@@ -56,7 +56,7 @@ class Answers extends Model
         'id' => 'integer',
         'answer' => 'string',
         'status' => 'string',
-        'puntaje'=> 'integer'
+        'puntaje'=> 'float'
     ];
 
     /**
