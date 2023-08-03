@@ -164,7 +164,7 @@ class CompanyProvidersController extends MyBaseController
                     $suma += $question->qualification;
                 }
             }
-            $parcial = $section->total_points> 0 ? ($suma / $section->total_points)*100 : 0;
+            $parcial = $section->total_points > 0 ? ($suma / $section->total_points)*100 : 100;
             $sectionFinal = [
                 'section'=> $section->name,
                 'puntaje'=> $section->total_points,
