@@ -34,7 +34,13 @@ $(function () {
                         if (row.statusInformation === null) {
                             return '<span class="label label-primary label-inline font-weight-lighter">Creado</span>';
                         } else {
-                            return '<span class="label label-success label-pill label-inline">' + row.statusInformation +'  </span>';
+                            if(row.statusInformation === 'Finalizado'){
+                             return '<span class="label label-primary label-pill label-inline">' + row.statusInformation +'  </span>';
+                            }
+                            else{
+                                return '<span class="label label-success label-pill label-inline">' + row.statusInformation +'  </span>';
+                            }
+                            
                         }
                     },
                 },
@@ -98,6 +104,9 @@ function saveForm() {
                 showConfirmButton: false,
                 timer: 1500
             })
+            setTimeout(() => {
+                window.location.reload()
+            }, 3000);
 
         }
     });

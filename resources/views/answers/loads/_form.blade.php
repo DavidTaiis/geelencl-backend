@@ -14,7 +14,7 @@
         {!! Form::label('status','* Puntaje:', array('class' => 'control-label col-md-3')) !!}
         <div class="col-md-12">
         {!! Form::number('puntaje', $answers->puntaje, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => '5', 'maxlength' => '3', 'step' => "1", 'min'=>'1')) !!}
+                'off', 'placeholder' => '5')) !!}
         </div>
         </div>
 </div>

@@ -7,7 +7,7 @@ $puntaje = 0;
     <div class="card-header flex-wrap py-5">
         <div class="card-title">
         
-            <h3 class="card-label">Formulario de proveedor</h3>
+            <h3 class="card-label">Formulario de proveedor {{$provider->legal_name}}</h3>
         </div>
         <div class="card-toolbar">
           <span class="badge badge-secondary py-4 px-4 mr-3">Estado: </span>

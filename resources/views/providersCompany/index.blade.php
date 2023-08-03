@@ -34,16 +34,16 @@
             <h3 class="card-label">Formulario de proveedor</h3>
         </div>
         <div class="card-toolbar">
-          @if ($provider->statusInformation != 'Enviado')
+          @if ($provider->statusInformation == 'Guardado')
             <button onclick="saveForm()" name= "action" value="Enviar" class="btn btn-info p-4 m-2">Enviar</button>
             
           @endif
-          @if ($provider->statusInformation == 'Enviado')
+          @if ($provider->statusInformation == 'Calificado')
           <h3><b>Calificación: </b>{{$provider->qualification}}</h3> 
           @endif
           <form method="POST" enctype="multipart/form-data" action="{{ route('saveProviderCompany') }}" id="form_provider_qualification" name="form_provider_qualification">
                     @csrf
-                    @if ($provider->statusInformation != 'Enviado')
+                    @if ($provider->statusInformation == 'Guardado' || $provider->statusInformation == 'Creado')
           <button type="submit" name ="action" value="Guardar" class="btn btn-primary mr-2 p-4">Guardar</button>
             
           @endif
