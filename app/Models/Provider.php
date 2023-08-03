@@ -52,7 +52,8 @@ class Provider extends Model
         'direction2',
         'mobile_number',
         'statusInformation',
-        'empresas_id'
+        'empresas_id',
+        'codigo'
     ];
 
     /**
@@ -73,7 +74,8 @@ class Provider extends Model
         'direction2' => 'string',
         'mobile_number' => 'string',
         'statusInformation' => 'string',
-        'empresas_id'=>'integer'
+        'empresas_id'=>'integer',
+        'codigo'=>'string'
 
     ];
 

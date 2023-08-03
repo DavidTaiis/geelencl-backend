@@ -14,7 +14,7 @@
 <body>
     <div style="text-align: center;">
         <text style="font-size: 25px; font-family: Arial, Helvetica, sans-serif">Constancia de auditoria</text><br>
-        <text style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; margin-top: 25px;">Nº 02179/23</text>
+        <text style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; margin-top: 25px;">Nº {{$provider->id}}/{{$anio}}</text>
     </div>
     
     <div style="margin-top: 25px;font-size: 18px; font-family: Arial, Helvetica, sans-serif; margin-top: 25px;">
@@ -116,7 +116,7 @@
         <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">La calificación aprobatoria es de 75%.</text>
     </div>
     <div style="margin-top: 10px; text-align: center;">
-        <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">OL 285 2967n8</text>
+        <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">{{$provider->codigo}}</text>
     </div>
     
     <div style="margin-top: 15px; font-family: Arial, Helvetica, sans-serif;">

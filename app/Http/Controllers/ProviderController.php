@@ -119,6 +119,7 @@ class ProviderController extends MyBaseController
             if($provider->statusInformation == "Guardado"){
                 $provider->qualification = 0;
             }
+            $provider->codigo = static::generateRandomString(11);
             $provider->save();
             
             
@@ -138,4 +139,14 @@ class ProviderController extends MyBaseController
         $validation = Validator::make(Request::all(), ['name' => 'unique:provider,name,' . Request::get('id') . ',id']);
         return Response::json($validation->passes() ? true : false);
     }
+
+    static function generateRandomString($length = 11) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    } 
 }

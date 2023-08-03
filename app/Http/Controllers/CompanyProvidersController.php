@@ -189,6 +189,7 @@ class CompanyProvidersController extends MyBaseController
         $fecha_anio = date("d-m-Y",strtotime($fecha_actual."+ 1 year"));
         $urlImage = explode('uploads', $datosFirma->images[0]->url);
         $url = $urlImage[1];
+        $anio = date("y");
         $pdf = \PDF::loadView('companyProviders.reporte',[
         'sections' => $sections,
         'questionSaved' => $questionSaved,
@@ -197,10 +198,12 @@ class CompanyProvidersController extends MyBaseController
         'fecha_actual' => $fecha_actual,
         'fecha_anio' => $fecha_anio,
         'url' => $url,
-        'sectiones' => $sectiones
+        'sectiones' => $sectiones,
+        'anio'=>$anio
     ]);
 
-    return $pdf->download('archivo.pdf');
+    
+    return $pdf->download('archivo-'.$provider->legal_name.'-'.$anio.'.pdf');
     }
 
 }
