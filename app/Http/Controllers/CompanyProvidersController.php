@@ -149,13 +149,33 @@ class CompanyProvidersController extends MyBaseController
     }
 
     public function generatePdf($id){
+        $sectionsSaved = QuestionProvider::query()->where("proveedor_id", $id)->get()->unique('section_id');
         $questionSaved = QuestionProvider::query()->where("proveedor_id", $id)->get();
         $datosFirma = Certificate::query()->where('status', "ACTIVE")->first();
         $provider = Provider::where('id', $id)->first();
         if(!$provider){
             $provider = new Provider();
         }
-        
+        $sectiones =  [];
+        foreach ($sectionsSaved as $saved){
+            $section = Section::find($saved->section_id);
+            $suma = 0;
+            foreach($questionSaved as $question){
+                if($saved->section_id == $question->section_id){
+                    $suma += $question->qualification;
+                }
+            }
+            $parcial = $section->total_points> 0 ? ($suma / $section->total_points)*100 : 0;
+            $sectionFinal = [
+                'section'=> $section->name,
+                'puntaje'=> $section->total_points,
+                'valor' => $suma,
+                'parcial' => number_format($parcial,2)
+            ];
+            $sectiones[] = $sectionFinal;
+            $sectionFinal = [];
+            }
+            
         $providerId = $provider->id;
         $typeProvider = $provider->tipo_proveedor_id;
         $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
@@ -177,7 +197,8 @@ class CompanyProvidersController extends MyBaseController
         'datosFirma' =>    $datosFirma,
         'fecha_actual' => $fecha_actual,
         'fecha_anio' => $fecha_anio,
-        'url' => $url
+        'url' => $url,
+        'sectiones' => $sectiones
     ]);
 
     return $pdf->download('archivo.pdf');

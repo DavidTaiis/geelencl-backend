@@ -42,24 +42,16 @@
             </tr> 
         </thead> 
         <tbody> 
-            <tr style="text-align: center;"> 
-                <td style=" border: 1px solid black;">ACTIVIDAD</td> 
-                <td style=" border: 1px solid black;">10.00</td> 
-                <td style=" border: 1px solid black;">100.00</td> 
-                <td style=" border: 1px solid black;">10.00</td> 
+           
+            @foreach($sectiones as $section)
+            <tr> 
+                <td style=" border: 1px solid black;">{{$section['section']}}</td> 
+                <td style=" border: 1px solid black; text-align: center;">{{$section['puntaje']}}</td> 
+                <td style=" border: 1px solid black; text-align: center;">{{$section['parcial']}}</td> 
+                <td style=" border: 1px solid black; text-align: center;">{{$section['valor']}}</td> 
             </tr>
-            <tr style="text-align: center;">
-            <td style=" border: 1px solid black;">EVALUAC IÓN FINANCIERA</td>
-            <td style=" border: 1px solid black;">30.00</td>
-             <td style=" border: 1px solid black;">83.33</td>
-              <td style=" border: 1px solid black;">25.00</td>
-            </tr> 
-            <tr style="text-align: center;"> 
-                <td style=" border: 1px solid black;">OPERATIVA</td>
-                <td style=" border: 1px solid black;">25.00</td> 
-                <td style=" border: 1px solid black;">100.00</td> 
-                <td style=" border: 1px solid black;">25.00</td> 
-            </tr> 
+            @endforeach
+         
             
         </tbody> 
     </table>
