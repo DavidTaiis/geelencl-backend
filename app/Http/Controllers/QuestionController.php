@@ -78,7 +78,7 @@ class QuestionController extends MyBaseController
         $countQustion = isset($id) ? $question->order : $recordsTotal + 1;
     
 
-        $answers = Answers::where('answer', "!=", "Abierta")->pluck('answer', 'id')->toArray();
+        $answers = Answers::where('answer', "!=", "Abierta")->where('seccion_id', $sectionId)->pluck('answer', 'id')->toArray();
         $answersSelected = $question->id ? QuestionAnswers::query()
             ->where('preguntas_id', $question->id)
             ->get()

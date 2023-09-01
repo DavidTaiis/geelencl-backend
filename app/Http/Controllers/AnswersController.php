@@ -60,13 +60,16 @@ class AnswersController extends MyBaseController
         );
     }
 
-    public function getForm($id = null)
+    public function getForm($sectionId, $id = null)
     {
         $method = 'POST';
+        $section = Section::find($sectionId);
+
         $answers = isset($id) ? Answers::find($id) : new Answers();
         $view = View::make('answers.loads._form', [
             'method' => $method,
             'answers' => $answers,
+            'section' => $section,
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -88,7 +91,7 @@ class AnswersController extends MyBaseController
             $answers->answer = trim($data['answer']);
             $answers->status = 'ACTIVE';
             $answers->puntaje = trim($data['puntaje']);
-
+            $answers->seccion_id = trim($data['seccion_id']);
             
             $answers->save();
 

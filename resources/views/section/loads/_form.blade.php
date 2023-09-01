@@ -41,9 +41,9 @@
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('estandar','* ¿Pregunta de si y no?:', array('class' => 'control-label col-md-3')) !!}
+            {!! Form::label('estandar','* ¿Tipo de sección?:', array('class' => 'control-label col-md-3')) !!}
             <div class="col-md-12">
-            {!! Form::select('estandar', array( 'Si' => 'Si', 'No' => 'No'),$section->estandar,array('class' => 'form-control') ) !!}
+            {!! Form::select('estandar', array( 'SINO' => 'Preguntas formato Si / No', 'VARIABLE' => 'Preguntas con formato multiple y abierto'),$section->estandar,array('class' => 'form-control') ) !!}
             </div>
         </div>
     </div>

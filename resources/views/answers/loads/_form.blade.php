@@ -1,5 +1,7 @@
 {!! Form::model($answers, array('id' => 'answers_form','class' => 'form-horizontal', 'method' => $method)) !!}
 {!! Form::hidden('answers_id', $answers->id,['id'=>'answers_id']) !!}
+{!! Form::hidden('seccion_id', $section->id,['sectionId'=>'section_id']) !!}
+
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">

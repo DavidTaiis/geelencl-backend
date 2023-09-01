@@ -48,7 +48,7 @@
     ])
 
     
-    <input id="action_get_form" type="hidden" value="{{ route("getFormAnswers")}}"/>
+    <input id="action_get_form" type="hidden" value="{{ route("getFormAnswers",  $section->id)}}"/>
     <input id="action_save" type="hidden" value="{{ route("saveAnswers")}}"/>
     <input id="action_list" type="hidden" value="{{ route("getListDataAnswers", $section->id) }}"/>
 @endsection
