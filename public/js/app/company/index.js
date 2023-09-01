@@ -52,7 +52,7 @@ $(function () {
                     orderable: false,
                     width: "180px",
                     render: function (data, type, row, meta) {
-                        return '<button class="btn btn-dark btn-sm" onclick="editCompany(' + row.id + ')">Editar</button>  <a href="'+ $('#action_index_sections').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Añadir Sección</span></a>';
+                        return '<button class="btn btn-dark btn-sm" onclick="editCompany(' + row.id + ')">Editar</button>  <a href="'+ $('#action_index_provedores').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Proveedores</span></a>';
                     }
                     
                 }

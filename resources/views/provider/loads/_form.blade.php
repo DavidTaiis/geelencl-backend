@@ -67,7 +67,7 @@
         {!! Form::label('company_id','* Empresa:', array('class' => 'control-label col-md-12')) !!}
         <div class="col-md-12">
             {!! Form::select('company_id', $companies, $provider->empresas_id,array('class' => 'form-control', 'autocomplete' =>
-            'off', 'placeholder' => 'Seleccione', 'required')); !!}
+            'off', 'required')); !!}
         </div>
     </div>
        
