@@ -53,8 +53,8 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
 
     Route::group(['prefix' => 'provider'], function () {
         Route::get('/{id?}', 'ProviderController@index')->name('indexViewProvider');
-        Route::get('/list/{id?}', 'ProviderController@getList')->name('getListDataProvider');
-        Route::get('/form/{companyId?}/{id?}', 'ProviderController@getForm')->name('getFormProvider');
+        Route::get('/list/{id}', 'ProviderController@getList')->name('getListDataProvider');
+        Route::get('/form/{companyId}/{id?}', 'ProviderController@getForm')->name('getFormProvider');
         Route::post('save', 'ProviderController@postSave')->name('saveProvider');
         Route::post('unique-name', 'ProviderController@postIsNameUnique')->name('uniqueNameProvider');
         /* Route::get('/view', 'CompanyController@view')->name('viewProfileCompany');

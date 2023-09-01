@@ -24,7 +24,13 @@ class ProviderController extends MyBaseController
      */
     public function index($id = null)
     {
+        if($id == null){
+            $user = User::find(Auth::user()->id);
+            $company = Company::where('users_id', $user->id)->first();
+        }else{
         $company = Company::find($id);
+
+        }
         $this->layout->content = View::make('provider.index', [
             'company'=> $company
         ]);
