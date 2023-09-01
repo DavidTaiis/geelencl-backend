@@ -71,7 +71,8 @@ class ProviderController extends MyBaseController
                 'draw' => $data['draw'],
                 'recordsTotal' => $recordsTotal,
                 'recordsFiltered' => $recordsFiltered,
-                'data' => $providers
+                'data' => $providers,
+                'user' => $user
             )
         );
     }
