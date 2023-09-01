@@ -47,12 +47,31 @@
         ],
      ]
     ])
+    @include('partials.modal',[
+    'title'=>'Finalizar Evaluación',
+    'id'=>'test_modal',
+    'size' => 'modal-lg',
+    'action_buttons'=>[
+        [
+        'type'=>'submit',
+        'form'=>'test_form',
+        'id'=>'btn_save',
+        'label'=>'Guardar',
+        'color'=>'btn-primary'
+        ],
+     ]
+    ])
 
     <input id="action_get_form" type="hidden" value="{{ route("getFormProvider", $company->id) }}"/>
     <input id="action_unique_name" type="hidden" value="{{ route("uniqueNameProvider") }}"/>
     <input id="action_save_provider" type="hidden" value="{{ route("saveProvider") }}"/>
     <input id="action_load_provider" type="hidden" value="{{ route("getListDataProvider",$company->id) }}"/>
     <input id="action_load_sections" type="hidden" value="{{ route("viewIndexSection") }}"/>
+    <input id="action_list" type="hidden" value="{{ route("getListDataCompanyProviders") }}"/>
+    <input id="action_index_provider" type="hidden" value="{{ route("viewIndexInformationProvider") }}"/>
+    <input id="action_generate_certificade" type="hidden" value="{{ route("generatePdf") }}"/>
+    <input id="action_form_test" type="hidden" value="{{ route("getFormtest") }}"/>
+    <input id="action_save_test" type="hidden" value="{{ route("saveTest") }}"/>
 
 @endsection
 @section('additional-scripts')
