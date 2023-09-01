@@ -45,9 +45,14 @@
                 'off', 'placeholder' => 'Seleccione', 'required')); !!}
             </div>
         </div>
+        <div class="form-group">
+            {!! Form::label('estandar','* ¿Pregunta de si y no?:', array('class' => 'control-label col-md-3')) !!}
+            <div class="col-md-12">
+            {!! Form::select('estandar', array( 'Si' => 'Si', 'No' => 'No'),$section->status,array('class' => 'form-control') ) !!}
+            </div>
+        </div>
     </div>
 </div>
-
 
 
 {!! Form::close() !!}

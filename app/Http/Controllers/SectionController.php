@@ -36,7 +36,7 @@ class SectionController extends MyBaseController
         $data = Request::all();
 
         $query = Section::query();  
-        $query->where('empresas_id', $id);
+        $query->where('proveedor_id', $id);
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
@@ -52,7 +52,7 @@ class SectionController extends MyBaseController
             $query->limit((int)$data['length']);
         }
 
-        $sections = $query->with('empresa')->orderBy('empresas_id')->get()->toArray();
+        $sections = $query->with('proveedor')->orderBy('proveedor_id')->get()->toArray();
 
         return Response::json(
             array(
@@ -64,7 +64,7 @@ class SectionController extends MyBaseController
         );
     }
 
-    public function getForm($companyId = null,$id = null)
+    public function getForm($companyId = null,$id = null, $providerId)
     {
         //dd($id, $companyId);
         $method = 'POST';
@@ -107,7 +107,9 @@ class SectionController extends MyBaseController
             $section->status = trim($data['status']);
             $section->total_points = trim($data['totalPoints']);
             $section->empresas_id = trim($data['company_id']);
-
+            $section->proveedor_id = trim($data['provider_id']);
+            $section->estandar =  trim($data['estandar']);
+            
             
             $section->save();
             SectionTypeProvider::query()->where('secciones_id', $section->id)->delete();

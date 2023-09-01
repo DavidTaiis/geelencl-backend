@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
 
     Route::group(['prefix' => 'section'], function () {
         Route::get('/{id?}', 'SectionController@index')->name('viewIndexSection');
-        Route::get('/form/{companyId?}/{id?}', 'SectionController@getForm')->name('getFormSection');
+        Route::get('/form/{companyId?}/{id?}/{providerId?}', 'SectionController@getForm')->name('getFormSection');
         Route::get('/list/{id?}', 'SectionController@getList')->name('getListDataSection');
         Route::post('/save', 'SectionController@postSave')->name('saveSection');
         Route::post('/save/uploads', 'SectionController@postSaveUpload')->name('uploadSection');
