@@ -50,6 +50,7 @@
     <input id="action_save" type="hidden" value="{{ route("saveSection")}}"/>
     <input id="action_list" type="hidden" value="{{ route("getListDataSection", $provider->id) }}"/>
     <input id="action_index_question" type="hidden" value="{{ route("viewIndexQuestion") }}"/>
+    <input id="action_index_answer" type="hidden" value="{{ route("viewIndexAnswers") }}"/>
 
 @endsection
 @section('additional-scripts')

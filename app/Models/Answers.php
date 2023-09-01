@@ -44,7 +44,8 @@ class Answers extends Model
     protected $fillable = [
         'answer',
         'status',
-        'puntaje'
+        'puntaje',
+        'seccion_id'
     ];
 
     /**
@@ -56,7 +57,8 @@ class Answers extends Model
         'id' => 'integer',
         'answer' => 'string',
         'status' => 'string',
-        'puntaje'=> 'float'
+        'puntaje'=> 'float',
+        'seccion_id' => 'integer'
     ];
 
     /**

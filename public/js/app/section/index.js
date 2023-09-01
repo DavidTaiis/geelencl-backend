@@ -45,7 +45,7 @@ $(function () {
                     render: function (data, type, row, meta) {
                        
                         return '<button class="btn btn-dark btn-sm" onclick="editSection(' +
-                            row.id + ')">Editar</button> <a href="'+ $('#action_index_question').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Añadir pregunta</span></a>';
+                            row.id + ')">Editar</button> <a href="'+ $('#action_index_question').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Añadir pregunta</span></a> <a href="'+ $('#action_index_answer').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Añadir respuesta</span></a>';
                     },
                 },
             ],
