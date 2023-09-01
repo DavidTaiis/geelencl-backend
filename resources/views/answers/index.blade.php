@@ -47,9 +47,10 @@
      ]
     ])
 
+    
     <input id="action_get_form" type="hidden" value="{{ route("getFormAnswers")}}"/>
     <input id="action_save" type="hidden" value="{{ route("saveAnswers")}}"/>
-    <input id="action_list" type="hidden" value="{{ route("getListDataAnswers") }}"/>
+    <input id="action_list" type="hidden" value="{{ route("getListDataAnswers", $section->id) }}"/>
 @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/answers/index.js")}}"></script>

@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
     Route::group(['prefix' => 'answers'], function () {
         Route::get('/{id?}', 'AnswersController@index')->name('viewIndexAnswers');
         Route::get('/form/{sectionId?}/{id?}', 'AnswersController@getForm')->name('getFormAnswers');
-        Route::get('/list{id?}', 'AnswersController@getList')->name('getListDataAnswers');
+        Route::get('/list/{id?}', 'AnswersController@getList')->name('getListDataAnswers');
         Route::post('/save', 'AnswersController@postSave')->name('saveAnswers');
         Route::post('/save/uploads', 'AnswersController@postSaveUpload')->name('uploadAnswers');
     });

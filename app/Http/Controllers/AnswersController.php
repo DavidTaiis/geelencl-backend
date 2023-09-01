@@ -23,6 +23,7 @@ class AnswersController extends MyBaseController
     public function index($id = null)
     {
         $section = Section::find($id);
+        //dd($section);
         $this->layout->content = View::make('answers.index', [
             'section' => $section
         ]);
@@ -32,7 +33,7 @@ class AnswersController extends MyBaseController
     {
         $data = Request::all();
 
-        $query = Answers::query()->where('secciones_id', $id)->where('status', 'ACTIVE');
+        $query = Answers::query()->where('seccion_id', $id)->where('status', 'ACTIVE');
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
