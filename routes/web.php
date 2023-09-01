@@ -129,7 +129,19 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
     Route::group(['prefix' => 'providersCompany'], function () {
         Route::get('/', 'ProviderCompanyController@index')->name('viewIndexProviderCompany');
         Route::post('/save', 'ProviderCompanyController@postSave')->name('saveProviderCompany');
+
+        
     });
+
+    Route::group(['prefix' => 'producto'], function () {
+        Route::get('/', 'ProductoController@index')->name('viewIndexProducto');
+        Route::get('/form/{id?}', 'ProductoController@getForm')->name('getFormProducto');
+        Route::get('/list', 'ProductoController@getList')->name('getListDataProducto');
+        Route::post('/save', 'ProductoController@postSave')->name('saveProducto');
+        
+    });
+
+
     Route::group(['prefix' => 'testEnd'], function () {
         Route::get('/form/{id?}', 'TestEndController@getForm')->name('getFormtest');
         Route::post('/save', 'TestEndController@postSave')->name('saveTest');
