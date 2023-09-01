@@ -141,6 +141,13 @@ Route::group(['middleware' => ['auth', 'rbac']], function () {
         
     });
 
+    Route::group(['prefix' => 'referencia'], function () {
+        Route::get('/', 'ReferenciaController@index')->name('viewIndexReferencia');
+        Route::get('/form/{id?}', 'ReferenciaController@getForm')->name('getFormReferencia');
+        Route::get('/list', 'ReferenciaController@getList')->name('getListDataReferencia');
+        Route::post('/save', 'ReferenciaController@postSave')->name('saveReferencia');    
+    });
+
 
     Route::group(['prefix' => 'testEnd'], function () {
         Route::get('/form/{id?}', 'TestEndController@getForm')->name('getFormtest');
