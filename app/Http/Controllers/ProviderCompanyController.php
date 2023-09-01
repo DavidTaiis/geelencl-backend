@@ -44,12 +44,14 @@ class ProviderCompanyController extends MyBaseController
             }
 
             $providerId = $provider->typeProvider->id;
-            $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
+            $sectionsTypeProvider = Section::query()->where('status','ACTIVE')->where('proveedor_id',$providerId);
+
+            /* $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
             $sectionsTypeProvider->where(function ($subQuery) use ($providerId) {
                 $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($providerId) {
                         $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $providerId);
                     });
-            }); 
+            });  */
             
             $sections = $sectionsTypeProvider->get();
             
@@ -90,7 +92,7 @@ class ProviderCompanyController extends MyBaseController
             ->where('empresas_id', $provider->empresas_id)
             ->delete();
            
-            $sections = Section::query()->get();
+            $sections = Section::query()->where('proveedor_id',$provider->id)->get();
             foreach ($sections as $section) {
                 foreach ($section->questions as $question) {
                     foreach ($question->answers as $answer) {
@@ -111,7 +113,7 @@ class ProviderCompanyController extends MyBaseController
                                 $questionProvider->value = $data["answerQuestion"."-".$question->id."-".$answer->id];
                             }
                         }
-                        if($question->type_question == 'MULTIPLE'){ 
+                        if($question->type_question == 'MULTIPLE' || $question->type_question == 'SINO' ){ 
                             if(isset($data["answerQuestion"."-".$question->id]) && $data["answerQuestion"."-".$question->id] != null){
                                 $questionProviderSaved = QuestionProvider::query()
                                 ->where("proveedor_id", $provider->id)

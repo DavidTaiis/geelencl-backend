@@ -79,12 +79,12 @@ class CompanyProvidersController extends MyBaseController
         
         $providerId = $provider->id;
         $typeProvider = $provider->tipo_proveedor_id;
-        $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
-         $sectionsTypeProvider->where(function ($subQuery) use ($typeProvider) {
+        $sectionsTypeProvider = Section::query()->where('status','ACTIVE')->where('proveedor_id',$providerId);
+         /* $sectionsTypeProvider->where(function ($subQuery) use ($typeProvider) {
             $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($typeProvider) {
                     $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $typeProvider);
                 });
-        }); 
+        });  */
        /*  dd($sectionsTypeProvider->get()); */
 
         
@@ -106,14 +106,8 @@ class CompanyProvidersController extends MyBaseController
             $typeProvider = $provider->tipo_proveedor_id;
             $questionSaved = QuestionProvider::query()->where("proveedor_id", $providerId)->get();
             $idSecctionProvider = QuestionProvider::query()->where("proveedor_id", $providerId)->groupBy('section_id')->pluck('section_id');
-            $sectionsTypeProvider = Section::query()->where('status','ACTIVE');
-            $sectionsTypeProvider->where(function ($subQuery) use ($typeProvider) {
-               $subQuery->whereHas('sectionsTypeProvider', function ($querySub) use ($typeProvider) {
-                       $querySub->where('secciones_tipo_proveedor.tipo_proveedor_id' , $typeProvider);
-                   });
-           }); 
-          $sections = $sectionsTypeProvider->get();
-           $sections = $sectionsTypeProvider->get();
+            $sectionsTypeProvider = Section::query()->where('status','ACTIVE')->where('proveedor_id',$providerId);
+            $sections = $sectionsTypeProvider->get();
             $totalPorcentajeProvider = 0;
             foreach ($sections as $section) {
             $porcentajeSection = 0;

@@ -15,7 +15,7 @@
       @endif
       </div> 
       <div  style="text-align: left; margin: 10px;">
-        <a href="{{route('viewIndexSection', $section->id)}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-secondary btn-left"><i class="fas fa-angle-double-left"></i> Atrás</span></a> </div>    
+        <a href="{{route('viewIndexSection', $section->proveedor_id)}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-secondary btn-left"><i class="fas fa-angle-double-left"></i> Atrás</span></a> </div>    
     </div> 
     @endif
 

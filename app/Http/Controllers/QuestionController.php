@@ -113,10 +113,11 @@ class QuestionController extends MyBaseController
 
     public function postSave()
     {
+       
         try {
             DB::beginTransaction();
             $data = Request::all();
-            /* $section = json_decode($data['section']); */
+            $section = Section::find($data['section_id']);
             if ($data['question_id'] == '') { //Create
                 $question = new Question();
                 $question->question = $data['question'];
@@ -137,28 +138,61 @@ class QuestionController extends MyBaseController
             $question->status = trim($data['status']);
             $question->document = trim($data['document']);
             $question->save();
-            $answerOpen = Answers::where('answer', 'Abierta')->first();
+           
+            
+           
+
+            if($question->type_question == 'SINO'){
+                $answerSI = Answers::query()
+                ->where('answer', 'Si')
+                ->where('seccion_id', $data['section_id'])
+                ->first();
+                $answerNo = Answers::query()
+                ->where('answer', 'No')
+                ->where('seccion_id', $data['section_id'])
+                ->first();  
+                $answersQuestion = new QuestionAnswers();
+                $answersQuestion->preguntas_id = $question->id;
+                $answersQuestion->respuestas_id = $answerSI->id;
+                $answersQuestion->save();
+                $answersQuestion = new QuestionAnswers();
+                $answersQuestion->preguntas_id = $question->id;
+                $answersQuestion->respuestas_id = $answerNo->id;
+                $answersQuestion->save();
+                
+                $totalQuestion = Question::query()->where('secciones_id', $data['section_id'])->count();
+                $puntajePregunta = $section->total_points / $totalQuestion;
+                $answerSI->puntaje = $puntajePregunta;
+                $answerSI->save();
+
+            }
             if ($question->type_question == 'ABIERTA') {
                 QuestionAnswers::query()->where('preguntas_id', $question->id)->delete();
+                $answerOpen = Answers::query()
+                ->where('answer', 'Abierta')
+                ->where('seccion_id', $data['section_id'])
+                ->first();
                 $answersQuestion = new QuestionAnswers();
                 $answersQuestion->preguntas_id = $question->id;
                 $answersQuestion->respuestas_id = $answerOpen->id;
                 $answersQuestion->save();
-            }else{
+            }
+            if ($question->type_question == 'MULTIPLE') {
+                
                 QuestionAnswers::query()->where('preguntas_id', $question->id)->delete();
-               
-                foreach ($data['answers'] as $answersId) {
-                    $answersQuestion = QuestionAnswers::query()
-                        ->where('preguntas_id', $question->id  )
-                        ->where('respuestas_id', $answersId)
-                        ->first() ?? new QuestionAnswers();
-                        
+                $answerMultiple = Answers::query()
+                ->where('answer', '!=','Abierta')
+                ->where('seccion_id', $data['section_id'])
+                ->get();
+                foreach($answerMultiple as $multiple){
+                    $answersQuestion = new QuestionAnswers();
                     $answersQuestion->preguntas_id = $question->id;
-                    $answersQuestion->respuestas_id = $answersId;
+                    $answersQuestion->respuestas_id = $multiple->id;
                     $answersQuestion->save();
+                }
             }
-           
-            }
+
+            
 
             QuestionTypeProvider::query()->where('preguntas_id', $question->id)->delete();
             foreach ($data['typeProviders'] as $typeProvidersId) {

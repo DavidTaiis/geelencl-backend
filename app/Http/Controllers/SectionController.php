@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
+use App\Models\Answers;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -108,9 +109,29 @@ class SectionController extends MyBaseController
             $section->total_points = trim($data['totalPoints']);
             $section->proveedor_id = trim($data['provider_id']);
             $section->estandar =  trim($data['estandar']);
-            
-            
             $section->save();
+
+            if($section->estandar == 'SINO'){
+            $answers = new Answers();
+            $answers->answer = 'Si';
+            $answers->status = 'ACTIVE';
+            $answers->puntaje = 0;
+            $answers->seccion_id = $section->id;
+            $answers->save();
+            $answers = new Answers();
+            $answers->answer = 'No';
+            $answers->status = 'ACTIVE';
+            $answers->puntaje = 0;
+            $answers->seccion_id = $section->id;
+            $answers->save();
+            }else{
+            $answers = new Answers();
+            $answers->answer = 'Abierta';
+            $answers->status = 'ACTIVE';
+            $answers->puntaje = 0;
+            $answers->seccion_id = $section->id;
+            $answers->save();
+            }
             SectionTypeProvider::query()->where('secciones_id', $section->id)->delete();
             foreach ($data['typeProviders'] as $typeProviderId) {
                 $typeProviders = SectionTypeProvider::query()

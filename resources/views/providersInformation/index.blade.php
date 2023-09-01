@@ -70,7 +70,7 @@ $puntaje = 0;
                             
                             @foreach ($question->answers as $answer )
                            
-                                @if ($question->type_question == 'MULTIPLE')
+                                @if ($question->type_question == 'MULTIPLE' || $question->type_question == 'SINO')
                               
 
                                     @php
