@@ -22,23 +22,19 @@ class ProviderController extends MyBaseController
     /**
      *
      */
-    public function index()
+    public function index($id = null)
     {
+        $company = Company::find($id);
         $this->layout->content = View::make('provider.index', [
+            'company'=> $company
         ]);
     }
 
-    public function getList()
+    public function getList($id = null)
     {
         $data = Request::all();
         $user = User::find(Auth::user()->id);
-        $company = Company::where('users_id', $user->id)->first();
-
-        if ($user->id == 1) {
-            $query = Provider::query();
-        }else{
-            $query = Provider::query()->where('empresas_id', $company->id);
-        }
+        $query = Provider::query()->where('empresas_id', $id);
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
@@ -65,13 +61,13 @@ class ProviderController extends MyBaseController
         );
     }
 
-    public function getForm($id = null)
+    public function getForm($companyId = null, $id = null)
     {
         $method = 'POST';
         $provider = isset($id) ? Provider::find($id) : new Provider();
         $user = $provider->id ? User::find($provider->users_id): new User();
         $typeProvider = TypeProvider::all()->pluck('name', 'id')->toArray();
-        $companies = Company::all()->pluck('comercial_name', 'id')->toArray();
+        $companies = Company::query()->where('id', $companyId)->pluck('comercial_name', 'id')->toArray();
        
         $view = View::make('provider.loads._form', [
             'method' => $method,
