@@ -14,7 +14,12 @@ $(function () {
                 data: function (filterDateTable) {
                     //additional params for ajax request
                     // filterDateTable.vendor_id = 3;
-                }
+                },
+                user: function (filterDateTable) {
+                    //additional params for ajax request
+                    // filterDateTable.vendor_id = 3;
+                },
+
             },
             "responsive": true,
             "language": {
@@ -55,22 +60,29 @@ $(function () {
                     title: 'Configuraciones',
                     orderable: false,
                     render: function (data, type, row, meta) {
-                        return '<button class="btn btn-dark btn-sm" onclick="editprovider(' + row.id + ')">Editar</button> <a href="'+ $('#action_load_sections').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Secciones</span></a>';
+                        if(row.user.id == 1){
+                            return '<button class="btn btn-dark btn-sm" onclick="editprovider(' + row.id + ')">Editar</button> <a href="'+ $('#action_load_sections').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Secciones</span></a>';
+                        }else{
+                            return '<button class="btn btn-dark btn-sm" onclick="editprovider(' + row.id + ')">Editar</button>';
+                        }
                     }
                     
                 },
+                
                 {
                     data: null,
                     title: 'Acciones Evaluación',
                     orderable: false,
                     render: function (data, type, row, meta) {
-                        if(row.statusInformation == "Finalizado"){
-                            return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a>';
-
-                        }else{
-                            return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a> <button class="btn btn-dark btn-sm" onclick="newTest(' + row.id + ')">Finalizar Evaluación</button>';
-
-                        }
+                            if(row.user.id == 1){
+                                if(row.statusInformation == "Finalizado"){
+                                    return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a>';
+                                }else{
+                                     return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a> <a href="'+ $('#action_generate_certificade').val() +'/'+ row.id+'" target=""><span class="btn btn btn-dark btn-sm">Generar certificado</span></a> <button class="btn btn-dark btn-sm" onclick="newTest(' + row.id + ')">Finalizar Evaluación</button>';   
+                                }
+                            }else{
+                            return '<a href="'+ $('#action_index_provider').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Ver información</span></a>';
+                            }
                        
                     },
                 },

@@ -48,7 +48,7 @@ class ProviderController extends MyBaseController
     public function getList($id = null)
     {
         $data = Request::all();
-        $user = User::find(Auth::user()->id);
+        $user = User::query()->where('id',Auth::user()->id)->get()->toArray();
         $query = Provider::query()->where('empresas_id', $id);
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
@@ -66,13 +66,17 @@ class ProviderController extends MyBaseController
         }
 
         $providers = $query->get()->toArray();
+        $dataProvider = [];
+        foreach($providers as $item ){
+            $item['user'] = $user[0];
+            $dataProvider[] = $item;
+        }
         return Response::json(
             array(
                 'draw' => $data['draw'],
                 'recordsTotal' => $recordsTotal,
                 'recordsFiltered' => $recordsFiltered,
-                'data' => $providers,
-                'user' => $user
+                'data' => $dataProvider
             )
         );
     }
