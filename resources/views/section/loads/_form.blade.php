@@ -1,5 +1,6 @@
 {!! Form::model($section, array('id' => 'section_form','class' => 'form-horizontal', 'method' => $method)) !!}
 {!! Form::hidden('section_id', $section->id,['id'=>'section_id']) !!}
+
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
@@ -9,6 +10,7 @@
                 'off', 'placeholder' => 'ej. Sección 1', 'maxlength' => '64')) !!}
             </div>
         </div>
+        <input type="hidden" name = "provider_id" value="{{$providerId}}">
     
         <div class="form-group">
             {!! Form::label('status','* Estado:', array('class' => 'control-label col-md-3')) !!}
@@ -39,16 +41,9 @@
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('company_id','* Empresa:', array('class' => 'control-label col-md-12')) !!}
-            <div class="col-md-12">
-                {!! Form::select('company_id', $companies, $section->empresas_id,array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'Seleccione', 'required')); !!}
-            </div>
-        </div>
-        <div class="form-group">
             {!! Form::label('estandar','* ¿Pregunta de si y no?:', array('class' => 'control-label col-md-3')) !!}
             <div class="col-md-12">
-            {!! Form::select('estandar', array( 'Si' => 'Si', 'No' => 'No'),$section->status,array('class' => 'form-control') ) !!}
+            {!! Form::select('estandar', array( 'Si' => 'Si', 'No' => 'No'),$section->estandar,array('class' => 'form-control') ) !!}
             </div>
         </div>
     </div>

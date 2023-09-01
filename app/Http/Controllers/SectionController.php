@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\TypeProvider;
 use App\Models\Company;
+use App\Models\Provider;
 use App\Models\SectionTypeProvider;
 
 
@@ -25,9 +26,9 @@ class SectionController extends MyBaseController
      */
     public function index($id = null)
     {
-        $company = Company::find($id);
+        $provider = Provider::find($id);
         $this->layout->content = View::make('section.index', [
-            "company" => $company
+            "provider" => $provider
         ]);
     }
 
@@ -64,13 +65,12 @@ class SectionController extends MyBaseController
         );
     }
 
-    public function getForm($companyId = null,$id = null, $providerId)
+    public function getForm($providerId = null, $id = null)
     {
         //dd($id, $companyId);
         $method = 'POST';
         $section = isset($id) ? Section::find($id) : new Section();
         $typeProviders = TypeProvider::all()->pluck('name', 'id')->toArray();
-        $companies = Company::all()->where('id', $companyId)->pluck('comercial_name', 'id')->toArray();
         $typeProvidersSelected = $section->id ? SectionTypeProvider::query()
             ->where('secciones_id', $section->id)
             ->get()
@@ -81,7 +81,7 @@ class SectionController extends MyBaseController
             'section' => $section,
             'typeProviders' => $typeProviders,
             'typeProvidersSelected' => $typeProvidersSelected,
-            'companies' => $companies
+            'providerId' => $providerId
         ])->render();
         return Response::json(array(
             'html' => $view
@@ -106,7 +106,6 @@ class SectionController extends MyBaseController
             $section->value = trim($data['value']);
             $section->status = trim($data['status']);
             $section->total_points = trim($data['totalPoints']);
-            $section->empresas_id = trim($data['company_id']);
             $section->proveedor_id = trim($data['provider_id']);
             $section->estandar =  trim($data['estandar']);
             

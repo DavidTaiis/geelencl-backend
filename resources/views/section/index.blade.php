@@ -1,23 +1,21 @@
 @section('content')
-@if ($company)
+@if ($provider)
 <div class="bg-white " style="margin-top: 0px ; text-align: center; width:100% ; align-self: center; padding-bottom: 15px;">
     
       <br> 
       <div class="d-flex flex-column ">
-    <label style="text-aling: center"><b>Secciones de la empresa</b> </label><br>
-   <span><label><b>Nombre Legal:</b> </label>
-    <label>{{$company->comercial_name}} </label></span>
-    <span><label><b>Nombre Comercial:</b> </label>
-    <label>{{$company->legal_name}} </label></span>
+    <label style="text-aling: center"><b>Secciones del proveedor</b> </label><br>
+    <span><label><b>Nombre Proveedor:</b> </label>
+    <label>{{$provider->legal_name}} </label></span>
     <span><label><b>Estado :</b> </label>
-      @if ($company->status == 'ACTIVE')
+      @if ($provider->status == 'ACTIVE')
       <label> Activo</label></span>
       @else
       <label>Inactivo </label></span>
       @endif
       </div> 
       <div  style="text-align: left; margin: 10px;">
-        <a href="{{route('indexViewCompany')}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-secondary btn-left"><i class="fas fa-angle-double-left"></i> Atrás</span></a> </div>    
+        <a href="{{route('indexViewProvider', $provider->empresas_id)}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-secondary btn-left"><i class="fas fa-angle-double-left"></i> Atrás</span></a> </div>    
     </div> 
     @endif
 
@@ -48,9 +46,9 @@
         ],
      ]
     ])
-    <input id="action_get_form" type="hidden" value="{{ route("getFormSection", $company->id) }}"/>
+    <input id="action_get_form" type="hidden" value="{{ route("getFormSection", $provider->id) }}"/>
     <input id="action_save" type="hidden" value="{{ route("saveSection")}}"/>
-    <input id="action_list" type="hidden" value="{{ route("getListDataSection", $company->id) }}"/>
+    <input id="action_list" type="hidden" value="{{ route("getListDataSection", $provider->id) }}"/>
     <input id="action_index_question" type="hidden" value="{{ route("viewIndexQuestion") }}"/>
 
 @endsection

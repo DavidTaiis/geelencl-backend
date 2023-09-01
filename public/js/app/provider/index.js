@@ -52,9 +52,8 @@ $(function () {
                     data: null,
                     title: 'Acciones',
                     orderable: false,
-                    width: "140px",
                     render: function (data, type, row, meta) {
-                        return '<button class="btn btn-dark btn-sm" onclick="editprovider(' + row.id + ')">Editar</button>';
+                        return '<button class="btn btn-dark btn-sm" onclick="editprovider(' + row.id + ')">Editar</button> <a href="'+ $('#action_load_sections').val() +'/'+ row.id+'" target=""><span class="btn btn btn-outline-dark btn-sm">Secciones</span></a>';
                     }
                     
                 }

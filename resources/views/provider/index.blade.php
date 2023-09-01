@@ -52,6 +52,8 @@
     <input id="action_unique_name" type="hidden" value="{{ route("uniqueNameProvider") }}"/>
     <input id="action_save_provider" type="hidden" value="{{ route("saveProvider") }}"/>
     <input id="action_load_provider" type="hidden" value="{{ route("getListDataProvider",$company->id) }}"/>
+    <input id="action_load_sections" type="hidden" value="{{ route("viewIndexSection") }}"/>
+
 @endsection
 @section('additional-scripts')
     <script src="{{asset("js/app/provider/index.js")}}"></script>

@@ -90,8 +90,8 @@ class Section extends Model
         return $this->belongsToMany(TypeProvider::class, 'secciones_tipo_proveedor',
             'secciones_id', 'tipo_proveedor_id');
     }
-    public function empresa()
+    public function proveedor()
     {
-        return $this->belongsTo(Company::class, 'empresas_id');
+        return $this->belongsTo(Provider::class, 'proveedor_id');
     }
 }
