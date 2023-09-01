@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use App\Models\Image;
+use App\Models\Section;
 use App\Models\ImageParameter;
 use App\Http\Controllers\Multimedia\ImageController;
 use Illuminate\Support\Facades\Storage;
@@ -19,17 +20,19 @@ class AnswersController extends MyBaseController
     /**
      *
      */
-    public function index()
+    public function index($id = null)
     {
+        $section = Section::find($id);
         $this->layout->content = View::make('answers.index', [
+            'section' => $section
         ]);
     }
 
-    public function getList()
+    public function getList($id = null)
     {
         $data = Request::all();
 
-        $query = Answers::query();
+        $query = Answers::query()->where('secciones_id', $id)->where('status', 'ACTIVE');
         $recordsTotal = $query->get()->count();
         $recordsFiltered = $recordsTotal;
 
