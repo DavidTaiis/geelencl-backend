@@ -28,11 +28,15 @@ class ProductoController extends MyBaseController
     public function index()
     {
         $user = User::find(Auth::user()->id);
+        if($user->id == 1) {
+            $this->layout->content = View::make('denied');
+        }else{
         $provider = Provider::where('users_id', $user->id)->first();
         //dd($section);
         $this->layout->content = View::make('producto.index', [
             'provider' => $provider
         ]);
+        }
     }
 
     public function getList()
