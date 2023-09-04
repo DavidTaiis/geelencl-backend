@@ -14,9 +14,7 @@
       <label>Inactivo </label></span>
       @endif
       </div> 
-      <div  style="text-align: left; margin: 10px;">
-        <a href="{{route('viewIndexSection', $provider->id)}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-secondary btn-left"><i class="fas fa-angle-double-left"></i> Atrás</span></a> </div>    
-    </div> 
+     
     @endif
 
     @include('partials.admin_view',[
@@ -46,7 +44,9 @@
         ],
      ]
     ])
-
+ <div  style="text-align: right; margin: 10px;">
+  <a href="{{route('viewIndexReferencia')}}" style = "margin-bottom: 15px;" target=""><span class="btn btn-primary btn-right"><i class="fas fa-angle-double-right"></i> Continuar</span></a> </div>    
+</div> 
     
     <input id="action_get_form" type="hidden" value="{{ route("getFormProducto")}}"/>
     <input id="action_save" type="hidden" value="{{ route("saveProducto")}}"/>
