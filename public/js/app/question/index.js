@@ -146,7 +146,6 @@ function validateForm() {
 function loadTypeQuestion(){
     if($('#type_question').val() == 'ABIERTA'){
         $('#answers_id').prop( "disabled", true );
-        $('#answers_id').empty();
         $('#respuestas').hide();
     }else{
         $('#answers_id').prop( "disabled", false );
