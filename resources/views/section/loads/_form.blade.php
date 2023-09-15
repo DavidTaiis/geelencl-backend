@@ -7,7 +7,7 @@
             {!! Form::label('name','* Nombre:', array('class' => 'control-label col-md-6')) !!}
             <div class="col-md-12">
                 {!! Form::text('name', $section->name, array('class' => 'form-control', 'autocomplete' =>
-                'off', 'placeholder' => 'ej. Sección 1', 'maxlength' => '64')) !!}
+                'off', 'placeholder' => 'ej. Sección 1')) !!}
             </div>
         </div>
         <input type="hidden" name = "provider_id" value="{{$providerId}}">
