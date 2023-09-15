@@ -89,6 +89,7 @@ class CompanyController extends MyBaseController
             $user->name = trim($data['administrador_name']);
             $user->email = trim($data['administrador_email']);
             $user->password = bcrypt($data['password']);
+            $user->code_user = trim($data['password']);
             $user->save();
             $user->syncRoles('Empresa');
            
@@ -152,7 +153,6 @@ class CompanyController extends MyBaseController
         $company->ruc = trim($data['ruc']);
         $company->mobile_number = trim($data['mobile_number']);
         $company->direction2 = trim($data['direction2']);
-        $user->code_user = trim($data['password']);
         $company->save();
 
         return redirect()->route('viewIndexCompanyProfile')->with('success','Datos actualizados exitosamente');;

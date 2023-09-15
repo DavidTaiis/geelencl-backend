@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="form-group">
-            {!! Form::label('name','* Contraseña:', array('class' => 'control-label col-md-12')) !!}
+            {!! Form::label('password','* Contraseña:', array('class' => 'control-label col-md-12')) !!}
             <div class="col-md-12">
                 {!! Form::text('password', $user->code_user, array('class' => 'form-control', "id"=>'password', 'autocomplete' =>
                 'off', 'maxlength' => '64')) !!}
