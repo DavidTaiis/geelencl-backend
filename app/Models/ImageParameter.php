@@ -14,7 +14,8 @@ class ImageParameter extends Model
         '.jpg' => 'JPG',
         '.png' => 'PNG',
         '.gif' => 'GIF',
-        '.svg' => 'SVG'
+        '.svg' => 'SVG',
+        '.jpeg' => 'JPEG'
     ];
     public static $entities = [
         
