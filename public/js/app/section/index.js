@@ -106,11 +106,7 @@ function getForm(action) {
 function validateForm() {
     section_form.validate({
         rules: {
-            name: {
-                required: true,
-                maxlength: 64
-            },
-            
+     
         },
         messages: {
             
