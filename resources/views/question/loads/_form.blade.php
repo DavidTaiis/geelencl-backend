@@ -30,6 +30,14 @@
             </div>
         </div>
         @endif
+        <div class="form-group" id="respuestas">
+        {!! Form::label('answer_label','*Respuestas:', array('class' => 'control-label  col-md-12')) !!}
+            <div class="col-md-12">
+                {!! Form::select('answers[]',$answers, $answersSelected, array('class' => 'form-control', 'autocomplete' =>
+                'off', 'multiple'=>'true','id'=>'answers_id', 'required' => true)) !!}
+            </div>
+        </div>
+        
         
         <div class="form-group">
         {!! Form::label('typeProvider_id','*Tipos de proveedores:', array('class' => 'control-label  col-md-12')) !!}

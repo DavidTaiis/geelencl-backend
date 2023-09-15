@@ -178,16 +178,11 @@ class QuestionController extends MyBaseController
                 $answersQuestion->save();
             }
             if ($question->type_question == 'MULTIPLE') {
-                
                 QuestionAnswers::query()->where('preguntas_id', $question->id)->delete();
-                $answerMultiple = Answers::query()
-                ->where('answer', '!=','Abierta')
-                ->where('seccion_id', $data['section_id'])
-                ->get();
-                foreach($answerMultiple as $multiple){
+                foreach($data['answers'] as $multiple){
                     $answersQuestion = new QuestionAnswers();
                     $answersQuestion->preguntas_id = $question->id;
-                    $answersQuestion->respuestas_id = $multiple->id;
+                    $answersQuestion->respuestas_id = $multiple;
                     $answersQuestion->save();
                 }
             }
