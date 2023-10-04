@@ -40,12 +40,14 @@
                 'off', 'placeholder' => 'ej. 60', 'maxlength' => '64' ,'min'=>'0')) !!}
             </div>
         </div>
+        @if($section->is_used != 'SI')
         <div class="form-group">
             {!! Form::label('estandar','* ¿Tipo de sección?:', array('class' => 'control-label col-md-3')) !!}
             <div class="col-md-12">
             {!! Form::select('estandar', array( 'SINO' => 'Preguntas formato Si / No', 'VARIABLE' => 'Preguntas con formato multiple y abierto'),$section->estandar,array('class' => 'form-control') ) !!}
             </div>
         </div>
+        @endif
     </div>
 </div>
 

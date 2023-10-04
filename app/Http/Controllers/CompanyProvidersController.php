@@ -110,6 +110,8 @@ class CompanyProvidersController extends MyBaseController
             $sections = $sectionsTypeProvider->get();
             $totalPorcentajeProvider = 0;
             foreach ($sections as $section) {
+            $section->is_used = 'SI';
+            $section->save();
             $porcentajeSection = 0;
             $sectionTotal = 0;
                 foreach ($questionSaved as $question) {
@@ -125,7 +127,6 @@ class CompanyProvidersController extends MyBaseController
                 }
                 if($section->total_points > 0){
                     $porcentajeSection = ($sectionTotal * $section->value) / $section->total_points;
-
                 }
                 $totalPorcentajeProvider += $porcentajeSection;
             }

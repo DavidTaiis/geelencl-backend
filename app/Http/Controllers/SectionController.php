@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use App\Models\Answers;
+use App\Models\QuestionAnswers;
+use App\Models\Question;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -92,6 +94,8 @@ class SectionController extends MyBaseController
     public function postSave()
     {
         try {
+            $isUpdated = false;
+            $typebefore = '';
             DB::beginTransaction();
             $data = Request::all();
             if ($data['section_id'] == '') { //Create
@@ -102,6 +106,8 @@ class SectionController extends MyBaseController
                 if (isset($data['status'])) {
                     $section->status = $data['status'];
                 }
+                $isUpdated = true;
+                $typebefore = $section->estandar;
             }
             $section->name = trim($data['name']);
             $section->value = trim($data['value']);
@@ -110,28 +116,85 @@ class SectionController extends MyBaseController
             $section->proveedor_id = trim($data['provider_id']);
             $section->estandar =  trim($data['estandar']);
             $section->save();
+            
 
-            if($section->estandar == 'SINO'){
-            $answers = new Answers();
-            $answers->answer = 'Si';
-            $answers->status = 'ACTIVE';
-            $answers->puntaje = 0;
-            $answers->seccion_id = $section->id;
-            $answers->save();
-            $answers = new Answers();
-            $answers->answer = 'No';
-            $answers->status = 'ACTIVE';
-            $answers->puntaje = 0;
-            $answers->seccion_id = $section->id;
-            $answers->save();
-            }else{
-            $answers = new Answers();
-            $answers->answer = 'Abierta';
-            $answers->status = 'ACTIVE';
-            $answers->puntaje = 0;
-            $answers->seccion_id = $section->id;
-            $answers->save();
+            if($typebefore != $section->estandar && $isUpdated && $section->is_used != 'SI'){
+                //dd("llegando al cambio");
+                $answersDelete = Answers::query()->where('seccion_id', $section->id)->get();
+                
+                foreach($answersDelete as $ans ){
+                QuestionAnswers::query()->where('respuestas_id', $ans->id)->delete();
+                }
+                Answers::query()->where('seccion_id', $section->id)->delete();
+                if($section->estandar == 'SINO'){
+
+                    $answerSi = new Answers();
+                    $answerSi->answer = 'Si';
+                    $answerSi->status = 'ACTIVE';
+                    $answerSi->puntaje = 0;
+                    $answerSi->seccion_id = $section->id;
+                    $answerSi->save();
+                    
+                    $answerNo = new Answers();
+                    $answerNo->answer = 'No';
+                    $answerNo->status = 'ACTIVE';
+                    $answerNo->puntaje = 0;
+                    $answerNo->seccion_id = $section->id;
+                    $answerNo->save();
+                    
+                    $questionSaved = Question::query()->where('secciones_id', $section->id)->get();
+                    foreach($questionSaved as $saved){
+                        
+                        $answersQuestion = new QuestionAnswers();
+                        $answersQuestion->preguntas_id = $saved->id;
+                        $answersQuestion->respuestas_id = $answerNo->id;
+                        $answersQuestion->save();
+
+                        $answersQuestion = new QuestionAnswers();
+                        $answersQuestion->preguntas_id = $saved->id;
+                        $answersQuestion->respuestas_id = $answerSi->id;
+                        $answersQuestion->save();
+
+                        $saved->type_question = 'MULTIPLE';
+                        $saved->save();
+                        //dd($saved);
+                    }
+
+                    }else{
+                    $answers = new Answers();
+                    $answers->answer = 'Abierta';
+                    $answers->status = 'ACTIVE';
+                    $answers->puntaje = 0;
+                    $answers->seccion_id = $section->id;
+                    $answers->save();
+                    }
+
             }
+
+            if(!$isUpdated){
+                if($section->estandar == 'SINO'){
+                    $answers = new Answers();
+                    $answers->answer = 'Si';
+                    $answers->status = 'ACTIVE';
+                    $answers->puntaje = 0;
+                    $answers->seccion_id = $section->id;
+                    $answers->save();
+                    $answers = new Answers();
+                    $answers->answer = 'No';
+                    $answers->status = 'ACTIVE';
+                    $answers->puntaje = 0;
+                    $answers->seccion_id = $section->id;
+                    $answers->save();
+                    }else{
+                    $answers = new Answers();
+                    $answers->answer = 'Abierta';
+                    $answers->status = 'ACTIVE';
+                    $answers->puntaje = 0;
+                    $answers->seccion_id = $section->id;
+                    $answers->save();
+                    }
+            }
+                
             SectionTypeProvider::query()->where('secciones_id', $section->id)->delete();
             foreach ($data['typeProviders'] as $typeProviderId) {
                 $typeProviders = SectionTypeProvider::query()
