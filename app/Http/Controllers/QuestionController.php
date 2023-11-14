@@ -73,7 +73,7 @@ class QuestionController extends MyBaseController
         $question = isset($id) ? Question::find($id) : new Question();
 
         $query = Question::query()->where('secciones_id', $sectionId);
-        $recordsTotal = $query->get()->count();
+        $recordsTotal = $query->where('status','ACTIVE')->get()->count();
         
         $countQustion = isset($id) ? $question->order : $recordsTotal + 1;
     

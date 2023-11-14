@@ -184,7 +184,7 @@ class CompanyProvidersController extends MyBaseController
         $fecha_actual = date("d-m-Y");
         $fecha_anio = date("d-m-Y",strtotime($fecha_actual."+ 1 year"));
         $urlImage = explode('uploads', $datosFirma->images[0]->url);
-        $url = $urlImage[1];
+        $url = $urlImage ? $urlImage[1] : null;
         $anio = date("y");
         $pdf = \PDF::loadView('companyProviders.reporte',[
         'sections' => $sections,

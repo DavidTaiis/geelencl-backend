@@ -83,7 +83,11 @@
         </div>
         <div style="margin-left: 60%; width: 50%;">
             <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">Autorizado por </text><br>
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('uploads' . $url))) }}"><br>
+            @if ($url != null)
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('uploads' . $url))) }}"><br>      
+            @else
+            <div style="height: 100px;"></div>
+            @endif
             <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">{{$datosFirma->nombres}}</text><br>
             <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">{{$datosFirma->cargo}}</text><br>
             <text style="font-size: 12px; font-family: Arial, Helvetica, sans-serif;">GELEENCL</text>
