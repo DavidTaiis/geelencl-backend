@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    @if ($datosFirma)
     <div style="text-align: center;">
         <text style="font-size: 25px; font-family: Arial, Helvetica, sans-serif">Constancia de auditoria</text><br>
         <text style="font-size: 18px; font-family: Arial, Helvetica, sans-serif; margin-top: 25px;">Nº {{$provider->id}}/{{$anio}}</text>
@@ -164,6 +165,13 @@
         
         </table>
         </div>
+    @else
+        <div style="text-align: center">
+            <h1>Debes ingresar los datos del Certificado</h1>
+            <h2>Ingresa a configuraciones y crea los datos correspondientes</h2>
+        </div>
+    @endif
+   
 
 </body>
 </html>
