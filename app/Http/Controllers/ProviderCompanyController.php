@@ -94,6 +94,8 @@ class ProviderCompanyController extends MyBaseController
            
             $sections = Section::query()->where('proveedor_id',$provider->id)->get();
             foreach ($sections as $section) {
+                $section->is_used = 'SI';
+                $section->save();
                 foreach ($section->questions as $question) {
                     foreach ($question->answers as $answer) {
                         if($question->type_question == 'ABIERTA'){

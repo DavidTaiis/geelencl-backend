@@ -48,7 +48,8 @@ class Section extends Model
         'total_points',
         'empresas_id',
         'proveedor_id',
-        'estandar'
+        'estandar',
+        'is_used'
 
     ];
 
@@ -65,7 +66,9 @@ class Section extends Model
         'total_points' => 'float',
         'empresas_id'=>'integer',
         'proveedor_id' => 'integer',
-        'standar' => 'string'
+        'standar' => 'string',
+        'is_used' => 'string'
+
 
 
     ];
